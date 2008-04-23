@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			private var passTF:TextFormat = new TextFormat();	//已经输入过的字符的样式
+			private var normalTF:TextFormat = new TextFormat();	//没有输入的字符的样式
+			private var waitTF:TextFormat = new TextFormat();	//等待输入的当前字符的样式
+			private var wrongTF:TextFormat = new TextFormat();	//输入错误的字符的样式
+			
+			private var curIndex:int = 0;	//保存当前等待输入的字符的索引，1基
+			
+			private function init():void
+			{
+				passTF.color = 0xDDDDDD;
+				passTF.underline = false;
+				normalTF.color = 0x000000;
+				normalTF.underline = false;
+				waitTF.color = 0x000000;
+				waitTF.underline = true;
+				wrongTF.color = 0xFF0000;
+				wrongTF.underline = false;
+				this.textField.addEventListener(Event.SCROLL, scrollHandler1);
+				this.reset();
+			}
+			
+			public function reset():void
+			{
+				this.textField.setTextFormat(normalTF);
+				this.textField.setTextFormat(waitTF, 0);	//设置第一个字为待输入样式
+				curIndex = 0;			
+			}
+			
+			public function setFormatFromTypeIndex($index:int, $right:Boolean):void
+			{
+				//$index是1基的
+				trace('$index',$index);
+				trace('curIndex',curIndex);
+				if($index > curIndex)
+				//如果当前的文字数量大于上次输入的文字数量，说明是在输入文字
+				{
+					trace('当前是增加文本');
+					var _curTF:TextFormat = $right ? passTF : wrongTF;
+					if($index >= this.length)
+					//如果输入的字数与正确的字数相等，就将最后一个文字设置为已输入样式	
+					{
+						this.textField.setTextFormat(_curTF, $index-1, this.length);
+					}
+					else
+					//否则就按要求设置
+					{				
+						
+						this.textField.setTextFormat(_curTF, curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
+						this.textField.setTextFormat(waitTF, $index, $index + 1);	//将已输入文字的后一个文字设置成待输入样式		
+					}
+				}
+				else
+				//如果当前文字数量小于上次输入文字数量，说明是在删除文字
+				{
+					trace('当前是减少文本');
+					this.textField.setTextFormat(normalTF, curIndex);	//待输入的文字设置成未输入样式	
+					this.textField.setTextFormat(waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
+				}
+				curIndex = $index;
+				setScroll($index);
+			}
+			
+			public function setTextFormat($format:TextFormat, $beginIndex:int=-1, $endIndex:int = -1):void
+			{
+				this.textField.setTextFormat($format, $beginIndex, $endIndex);
+			}
+			
+			public function setScroll($charIndex:int):void
+			{
+				this.textField.scrollV = this.textField.getLineIndexOfChar($charIndex);
+			}
+			
+			public function scrollHandler1(evt:Event):void
+			{
+				//setScroll();
+			}
+			
+		]]>
+	</mx:Script>
+</mx:TextArea>

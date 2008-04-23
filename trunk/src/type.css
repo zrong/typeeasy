@@ -1,0 +1,14 @@
+/* CSS file */
+
+global
+{
+	color: #000000;
+	fontSize: 14;
+}
+TextArea
+{
+	fontSize: 20;
+	fontWeight: bold;
+	leading: 5;
+	themeColor: #FF0000;
+}

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+	<mx:Metadata>
+		[Event(name="inputChange", type="flash.events.Event")]		
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UITextField;
+			import flash.events.Event;
+			import flash.events.TextEvent;			
+				
+			[Bindable]
+			public var rightArticle:String;	//待输入的文本
+			private var curChar:String;	//当前输入的字符
+			private var inputRight:Boolean;	//当前的字符是否输入正确
+			private var inputWrongChars:Array;	//输入错误的字符索引(1基)数组
+			private var wrongTF:TextFormat = new TextFormat();
+			private var rightTF:TextFormat = new TextFormat();
+			
+			private var inputLength:int;
+			
+			private function init():void
+			{
+				this.addEventListener(TextEvent.TEXT_INPUT, textInputHandler);
+				this.addEventListener(Event.CHANGE, changeHandler);
+				wrongTF.color = 0xff0000;
+				rightTF.color = 0x000000;
+				reset();				
+			}
+			
+			public function reset():void
+			{
+				this.text = '';
+				this.editable = true;
+				inputWrongChars = new Array();
+				inputLength = 0;
+				inputRight = false;
+				this.enabled = true;
+				this.editable = true;
+				this.setFocus();
+			}
+			
+			private function textInputHandler(evt:TextEvent):void
+			{
+				//保存当前输入的字符
+				curChar = evt.text;
+			}
+			
+			private function changeHandler(evt:Event):void
+			{
+				trace('=================');
+				var _curIndex:int = this.length;	//已经输入的字符的索引 1基
+				var _rightChar:String = rightArticle.charAt(_curIndex-1);	//根据索引得出的正确的字符
+				trace('_curIndex:',_curIndex);
+				trace('inputLength:',inputLength);
+				if(_curIndex >= inputLength)
+				//如果字符索引大于上次输入的字符，说明是输入字符
+				{
+					trace('增加字符，当前索引：',_curIndex);
+					if(curChar == _rightChar)
+					{
+						inputRight = true;
+					}
+					else
+					{
+						inputRight = false;
+						inputWrongChars.push(_curIndex);
+						trace('错误索引：',inputWrongChars);
+					} 
+					setFormat(_curIndex);	//设置文字的样式显示输入正确或错误
+				}
+				else
+				//否则就是删除字符，不必设置文字样式
+				{
+					inputRight = true;
+					trace('删除字符，当前索引：',_curIndex);
+					trace('列表中的最后一个索引：',inputWrongChars[inputWrongChars.length-1]);
+					var _wrongLength:int = inputWrongChars.length;
+					if((_wrongLength != 0) && ((_curIndex+1) == inputWrongChars[_wrongLength-1]))
+					{
+						
+						inputWrongChars.pop();
+					}
+					trace('删除之后的错误索引：',inputWrongChars)
+				}
+				//如果输入的文字与正确的文字数量相等，说明输入完毕，禁止再输入
+				if(_curIndex >= rightArticle.length)this.editable = false;
+				//更新已经输入的文字数量
+				inputLength = this.length;
+				//发布文字改变的信息
+				this.dispatchEvent(new Event('inputChange'));
+				
+			}
+			
+			private function setFormat($curIndex:int):void
+			{
+				/*
+				trace('输入的文字数量222:',$curIndex);
+				trace('当前输入的文字:', curChar);
+				trace('正确的文字:', _rightChar);
+				*/				
+				this.textField.setTextFormat((inputRight?rightTF:wrongTF), $curIndex-1);
+			}
+			
+			public function get right():Boolean
+			{
+				return inputRight;
+			}
+			
+			public function get rightChars():int
+			{
+				return this.length - inputWrongChars.length;
+			}
+		]]>
+	</mx:Script>
+</mx:TextArea>

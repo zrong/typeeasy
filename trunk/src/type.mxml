@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:tt="*" layout="vertical" creationComplete="init()" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#EEF4E6, #EEF4E6]" width="525" height="630">
+	<mx:HBox width="100%" horizontalAlign="center">
+		<mx:Label text="时间："/>
+		<mx:Label id="timeLabel" text="{spareTime/1000}" color="#FF0000" fontWeight="bold"/>
+		<mx:Spacer width="100%" height="10"/>
+		<mx:Label text="正确率："/>
+		<mx:Label id="rightLabel"  text='{rightRatio}％'/>
+		<mx:Spacer width="100%" height="10"/>
+		<mx:Label text="速度："/>
+		<mx:Label id="speedLabel" text="{speed}字/分钟"/>
+		<mx:Spacer width="100%" height="10"/>
+		<mx:Label text="完成："/>
+		<mx:Label id="percentLabel" text="{percent}％"/>
+	</mx:HBox>
+	<mx:Text htmlText="说明：&lt;br&gt;　　计时会在你输入文字的时候开始。&lt;b&gt;如果下方的文本输入框的边框不是红色&lt;/b&gt;，请在文本输入框中单击一下，使文本输入框的边框变成红色，然后开始输入文字即可。" width="100%" selectable="false"/>
+	<mx:VDividedBox height="100%" width="100%">
+		<mx:VBox width="100%" height="50%">
+			<mx:Label text="这是你要输入的文字：" color="#56931B" fontWeight="bold"/>
+			<tt:SourceArea width="100%" height="100%" 
+				editable="false" selectable="false" 
+				id="sourceTA" text="{article}"
+				tabEnabled="false"
+				focusEnabled="false" styleName="TextField" backgroundColor="#FDF9D5"/>
+		</mx:VBox>
+		<mx:VBox width="100%" height="50%">
+			<mx:Label text="请单击此输入框使其边框变成红色，然后开始输入：" fontWeight="bold" color="#56931B"/>
+			<tt:TypeArea width="100%" height="100%" 
+				id="inputTA" rightArticle="{article}"
+				inputChange="changeHandler(event)"
+				textInput="textInputHandler(event)"
+				selectable="false" editable="false" enabled="false"/>
+		</mx:VBox>
+		
+	</mx:VDividedBox>
+	<mx:Style source="type.css"/>
+	<mx:Script source="type.as"/>	
+</mx:Application>
