@@ -1,0 +1,28 @@
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<script language="JavaScript" type="text/javascript" src="swfobject.js"></script>
+<style>
+	body { margin: 0px; overflow:hidden }
+</style>
+</head>
+
+<body scroll="no">
+	<div id="flashcontent">
+		<strong>必須升級Flash Player才可以繼續。</strong>
+		如果看到此信息，說明您的Flash Player版本過低或者您關閉了瀏覽器的JavaScript支援。<br/>
+		點擊<a href="http://www.adobe.com/go/getflashplayer" about="_blank"/>這里</a>安裝最新的Flash Player。
+	</div>
+	<script language="JavaScript" type="text/javascript">
+		// <![CDATAk
+		var so = new SWFObject("type.swf", "type", "525", "630", "9", "#869ca7");
+		so.addVariable("config", "config.xml");
+		//so.addParam('base', 'swf');
+		so.addParam('menu', 'false');
+		so.useExpressInstall('playerProductInstall.swf');
+		so.write("flashcontent");
+		// ]]>
+	</script>
+</body>
+</html>
