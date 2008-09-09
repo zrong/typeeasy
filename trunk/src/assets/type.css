@@ -5,6 +5,14 @@ global
 	color: #000000;
 	fontSize: 14;
 }
+
+Application
+{
+	backgroundGradientAlphas: 1.0, 1.0;
+	backgroundGradientColors: #EEF4E6, #EEF4E6;
+
+}
+
 TextArea
 {
 	fontSize: 20;

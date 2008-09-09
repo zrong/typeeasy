@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" horizontalAlign="center">
+	<mx:Metadata>
+		[Bindable]
+	</mx:Metadata>
+	<mx:Script>
+		<![CDATA[
+			public var spareTime:Number = time;	//剩余时间
+			public var rightRatio:Number = 0;	//正确率
+			public var percent:Number =0;	//完成度
+			public var speed:Number =0;	//打字速度
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%">
+		<mx:Label text="时间："/>
+		<mx:Label id="timeLabel" text="{spareTime/1000}" color="#FF0000" fontWeight="bold" width="100"/>
+		<mx:Spacer width="100%" height="10"/>
+		<mx:Label text="正确率："/>
+		<mx:Label id="rightLabel"  text='{rightRatio}％' width="100"/>
+	</mx:HBox>
+	<mx:HBox width="100%">
+		<mx:Label text="速度："/>
+		<mx:Label id="speedLabel" text="{speed}字/分钟" width="100"/>
+		<mx:Spacer width="100%" height="10"/>
+		<mx:Label text="完成："/>
+		<mx:Label id="percentLabel" text="{percent}％" width="100"/>		
+	</mx:HBox>
+</mx:VBox>
