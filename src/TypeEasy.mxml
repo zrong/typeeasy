@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:view="view.components.*"
+	width="525" height="630"
+	layout="vertical"
+	creationComplete="init()">
+	<view:TypeInfo id="typeInfo" width="100%"/>
+	<mx:Text htmlText="说明：&lt;br&gt;　　计时会在你输入文字的时候开始。&lt;b&gt;如果下方的文本输入框的边框不是红色&lt;/b&gt;，请在文本输入框中单击一下，使文本输入框的边框变成红色，然后开始输入文字即可。" width="100%" selectable="false"/>
+	<mx:VDividedBox height="100%" width="100%">
+		<mx:VBox width="100%" height="50%">
+			<mx:Label text="这是你要输入的文字：" color="#56931B" fontWeight="bold"/>
+			<view:SourceArea id="sourceTA" 
+				width="100%" height="100%" 
+				editable="false" selectable="false" 
+				text="{article}"
+				tabEnabled="false"
+				focusEnabled="false" styleName="TextField" backgroundColor="#FDF9D5"/>
+		</mx:VBox>
+		<mx:VBox width="100%" height="50%">
+			<mx:Label text="请单击此输入框使其边框变成红色，然后开始输入：" fontWeight="bold" color="#56931B"/>
+			<view:InputArea id="inputTA"
+				width="100%" height="100%" 
+				rightArticle="{article}"
+				inputChange="changeHandler(event)"
+				textInput="textInputHandler(event)"
+				selectable="false" editable="false" enabled="false"/>
+		</mx:VBox>		
+	</mx:VDividedBox>
+	<mx:Style source="assets/type.css"/>
+	<mx:Script>
+		<![CDATA[			
+			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
+			private function init():void
+			{
+				facade.startup(this);
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
