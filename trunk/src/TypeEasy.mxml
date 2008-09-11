@@ -9,21 +9,11 @@
 	<mx:VDividedBox height="100%" width="100%">
 		<mx:VBox width="100%" height="50%">
 			<mx:Label text="这是你要输入的文字：" color="#56931B" fontWeight="bold"/>
-			<view:SourceArea id="sourceTA" 
-				width="100%" height="100%" 
-				editable="false" selectable="false" 
-				text="{article}"
-				tabEnabled="false"
-				focusEnabled="false" styleName="TextField" backgroundColor="#FDF9D5"/>
+			<view:SourceArea id="sourceTA"/>
 		</mx:VBox>
 		<mx:VBox width="100%" height="50%">
 			<mx:Label text="请单击此输入框使其边框变成红色，然后开始输入：" fontWeight="bold" color="#56931B"/>
-			<view:InputArea id="inputTA"
-				width="100%" height="100%" 
-				rightArticle="{article}"
-				inputChange="changeHandler(event)"
-				textInput="textInputHandler(event)"
-				selectable="false" editable="false" enabled="false"/>
+			<view:InputArea id="inputTA"/>
 		</mx:VBox>		
 	</mx:VDividedBox>
 	<mx:Style source="assets/type.css"/>
