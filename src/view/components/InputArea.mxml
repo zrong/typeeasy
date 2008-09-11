@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" selectable="false" editable="false" enabled="false" creationComplete="init()">
 	<mx:Metadata>
 		[Event(name="inputChange", type="flash.events.Event")]		
 	</mx:Metadata>
@@ -8,7 +8,8 @@
 			import mx.core.UITextField;
 			import flash.events.Event;
 			import flash.events.TextEvent;			
-				
+			
+			public static const INPUT_CHANGE:String = 'inputChange';
 			[Bindable]
 			public var rightArticle:String;	//待输入的文本
 			private var curChar:String;	//当前输入的字符

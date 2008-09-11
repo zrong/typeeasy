@@ -9,6 +9,11 @@ package
 		public static const STARTUP:String = 'startup';
 		public static const ERROR:String = 'error';
 		
+		public static const RECEIVE_CONFIG:String = 'receiveConfig';
+		public static const RECEIVE_START:String = 'receiveStart';
+		public static const RECEIVE_POST:String = 'receivePOST';
+		
+		
 		public static function getInstance():ApplicationFacade
 		{
 			if(instance == null) instance = new ApplicationFacade();

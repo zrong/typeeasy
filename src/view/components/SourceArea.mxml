@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()">
+<mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" editable="false" selectable="false" tabEnabled="false" focusEnabled="false" backgroundColor="#FDF9D5" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
 			private var passTF:TextFormat = new TextFormat();	//已经输入过的字符的样式

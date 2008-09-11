@@ -5,7 +5,7 @@
 	</mx:Metadata>
 	<mx:Script>
 		<![CDATA[
-			public var spareTime:Number = time;	//剩余时间
+			public var spareTime:Number = 0;	//剩余时间
 			public var rightRatio:Number = 0;	//正确率
 			public var percent:Number =0;	//完成度
 			public var speed:Number =0;	//打字速度
