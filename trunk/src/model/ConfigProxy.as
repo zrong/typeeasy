@@ -11,15 +11,15 @@ package model
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 
-	public class LoadConfigProxy extends Proxy implements IResponder
+	public class ConfigProxy extends Proxy implements IResponder
 	{
-		public static const NAME:String = 'LoadConfigProxy';
+		public static const NAME:String = 'ConfigProxy';
 		
 		public static var CONFIG_URL:String;
 		public static var POST_URL:String;
 		public static var CHECK_URL:String;
 		
-		public function LoadConfigProxy(data:Object=null)
+		public function ConfigProxy(data:Object=null)
 		{
 			super(NAME, new ReceiveConfigVO());
 		}
@@ -54,7 +54,7 @@ package model
 		
 		public function result($data:Object):void
 		{
-			trace($data.toString());
+			trace($data.result.toString());
 		}
 		
 		public function fault($fault:Object):void

@@ -13,6 +13,7 @@ package
 		public static const RECEIVE_START:String = 'receiveStart';
 		public static const RECEIVE_POST:String = 'receivePOST';
 		
+		public static const TIMER_REFRESH:String = 'timerRefresh';
 		
 		public static function getInstance():ApplicationFacade
 		{
