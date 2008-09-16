@@ -11,5 +11,16 @@ package model.vo
 		public var article_id:String;		//对应题目id
 		public var right_per:String;		//正确率（百分数） 
 		public var speed:String;			//速度（字数/分钟）
+		
+		override public function toString():String
+		{
+			return super.toString() + 
+					", project_id:" + project_id +
+					", competition_id:" + competition_id +
+					", module_id:" + module_id +
+					", article_id:" + article_id +
+					", right_per:" + right_per +
+					", speed:" + speed ;
+		}
 	}
 }
