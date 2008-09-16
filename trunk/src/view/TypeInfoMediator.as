@@ -1,5 +1,7 @@
 package view
 {
+	import model.vo.ReceiveConfigVO;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -22,13 +24,18 @@ package view
 		
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.TIMER_REFRESH	];
+			return	[	ApplicationFacade.RECEIVE_CONFIG,
+						ApplicationFacade.TIMER_REFRESH	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
 		{
 			switch(notification.getName())
 			{
+				case ApplicationFacade.RECEIVE_CONFIG:
+					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
+					_view.spareTime = __config.time_limit*60*1000;
+					break;
 				case ApplicationFacade.TIMER_REFRESH:
 					//_refresh();
 					break;

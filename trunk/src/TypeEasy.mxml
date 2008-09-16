@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:view="view.components.*"
-	width="525" height="630"
 	layout="vertical"
 	creationComplete="init()">
 	<view:TypeInfo id="typeInfo" width="100%"/>
