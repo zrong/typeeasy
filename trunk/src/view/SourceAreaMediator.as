@@ -1,5 +1,6 @@
 package view
 {
+	import model.vo.InputVO;
 	import model.vo.ReceiveConfigVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -24,7 +25,8 @@ package view
 		
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.RECEIVE_CONFIG	];
+			return	[	ApplicationFacade.RECEIVE_CONFIG,
+						ApplicationFacade.INPUT	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
@@ -34,6 +36,10 @@ package view
 				case ApplicationFacade.RECEIVE_CONFIG:
 					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
 					_view.text = __config.article;
+					break;
+				case ApplicationFacade.INPUT:
+					var __vo:InputVO = notification.getBody() as InputVO;
+					_view.setFormatFromTypeIndex(__vo.curIndex, __vo.inputRight);
 					break;
 			}
 		}

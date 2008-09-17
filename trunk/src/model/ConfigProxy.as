@@ -24,7 +24,7 @@ package model
 			super(NAME, data);
 		}
 		
-		public function getParam():void
+		public function send():void
 		{
 			var __param:Object = Application.application.parameters;
 			if(__param.config == null)

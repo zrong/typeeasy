@@ -14,11 +14,13 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			facade.registerCommand(ApplicationFacade.ERROR, ErrorCommand);
+			facade.registerCommand(ApplicationFacade.SEND_START, SendStartCommand);
 			
 			var __load:ConfigProxy = new ConfigProxy(); 
 			facade.registerProxy(__load);
 			facade.registerProxy(new StartProxy());
 			facade.registerProxy(new PostProxy());
+			facade.registerProxy(new TimerProxy());
 				
 			var __app:TypeEasy = notification.getBody() as TypeEasy;
 			facade.registerMediator(new AppMediator(__app));
@@ -29,7 +31,7 @@ package controller
 			try
 			{
 				trace('调用getParam');
-				__load.getParam();
+				__load.send();
 			}
 			catch($err:Error)
 			{

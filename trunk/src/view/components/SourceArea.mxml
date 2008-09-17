@@ -7,7 +7,7 @@
 			private var _waitTF:TextFormat = new TextFormat();	//等待输入的当前字符的样式
 			private var _wrongTF:TextFormat = new TextFormat();	//输入错误的字符的样式
 			
-			private var curIndex:int = 0;	//保存当前等待输入的字符的索引，1基
+			private var _curIndex:int = 0;	//保存当前等待输入的字符的索引，1基
 			
 			private function init():void
 			{
@@ -27,15 +27,15 @@
 			{
 				textField.setTextFormat(_normalTF);
 				textField.setTextFormat(_waitTF, 0);	//设置第一个字为待输入样式
-				curIndex = 0;			
+				_curIndex = 0;			
 			}
 			
 			public function setFormatFromTypeIndex($index:int, $right:Boolean):void
 			{
 				//$index是1基的
 				trace('$index',$index);
-				trace('curIndex',curIndex);
-				if($index > curIndex)
+				trace('_curIndex',_curIndex);
+				if($index > _curIndex)
 				//如果当前的文字数量大于上次输入的文字数量，说明是在输入文字
 				{
 					trace('当前是增加文本');
@@ -49,7 +49,7 @@
 					//否则就按要求设置
 					{				
 						
-						this.textField.setTextFormat(_curTF, curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
+						this.textField.setTextFormat(_curTF, _curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
 						this.textField.setTextFormat(_waitTF, $index, $index + 1);	//将已输入文字的后一个文字设置成待输入样式		
 					}
 				}
@@ -57,11 +57,11 @@
 				//如果当前文字数量小于上次输入文字数量，说明是在删除文字
 				{
 					trace('当前是减少文本');
-					this.textField.setTextFormat(_normalTF, curIndex);	//待输入的文字设置成未输入样式	
+					this.textField.setTextFormat(_normalTF, _curIndex);	//待输入的文字设置成未输入样式	
 					this.textField.setTextFormat(_waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
 				}
-				curIndex = $index;
-				setScroll($index);
+				_curIndex = $index;
+				_setScroll($index);
 			}
 			
 			public function setTextFormat($format:TextFormat, $beginIndex:int=-1, $endIndex:int = -1):void
@@ -69,7 +69,7 @@
 				this.textField.setTextFormat($format, $beginIndex, $endIndex);
 			}
 			
-			public function setScroll($charIndex:int):void
+			private function _setScroll($charIndex:int):void
 			{
 				this.textField.scrollV = this.textField.getLineIndexOfChar($charIndex);
 			}
