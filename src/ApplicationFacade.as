@@ -13,6 +13,9 @@ package
 		public static const RECEIVE_START:String = 'receiveStart';
 		public static const RECEIVE_POST:String = 'receivePOST';
 		
+		public static const SEND_START:String = 'sendStart';
+		public static const SEND_POST:String = 'sendPost';
+		
 		public static const INPUT:String = 'inputChange';
 		
 		public static const TIMER_REFRESH:String = 'timerRefresh';
