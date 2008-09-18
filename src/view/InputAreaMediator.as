@@ -46,7 +46,7 @@ package view
 			}
 		}
 		
-		private function changeHandler(evt:Event):void
+		private function _changeHandler(evt:Event):void
 		{
 			trace('=================');
 			var __curIndex:int = _view.length;	//已经输入的字符的索引（1基）
@@ -84,7 +84,7 @@ package view
 				trace('删除之后的错误索引：',_inputWrongChars)
 			}
 			//如果输入的文字与正确的文字数量相等，说明输入完毕，禁止再输入
-			if(__curIndex >= _rightArticle.length)this.editable = false;
+			if(__curIndex >= _rightArticle.length)_view.editable = false;
 			//更新已经输入的文字数量
 			_inputLength = _view.length;
 			//发布文字改变的信息;
@@ -105,7 +105,7 @@ package view
 			_view.text = '';
 			_view.editable = true;
 			_inputWrongChars = new Array();
-			inputLength = 0;
+			_inputLength = 0;
 			_inputRight = false;
 			_view.enabled = true;
 			_view.editable = true;
