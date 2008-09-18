@@ -14,6 +14,15 @@ package model.vo
 			percent = $percent;
 			spareTime = $spareTime;
 		}
+		
+		public function toString():String
+		{
+			return "model.vo.TimerRefreshVO {" + 
+			' rightRatio:' + rightRatio +
+			', percent:' + percent +
+			', speed:' + speed +			
+			', spareTime:' + spareTime + '}';
+		}	
 
 	}
 }

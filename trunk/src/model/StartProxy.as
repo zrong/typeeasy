@@ -9,6 +9,7 @@ package model
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
+	import type.ErrorType;
 	import type.PostType;
 
 	public class StartProxy extends Proxy implements IResponder
@@ -24,7 +25,7 @@ package model
 		{
 			
 			var __vo:SendStartVO = new SendStartVO(true, PostType.START);
-			var __checkURL:String = ReceiveConfigVO(ConfigProxy(facade.retrieveProxy(ConfigProxy.NAME).getData()).getData()).check_url;
+			var __checkURL:String = ReceiveConfigVO(ConfigProxy(facade.retrieveProxy(ConfigProxy.NAME)).getData()).check_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__checkURL, __vo);
 			trace('当打字开始的时候提交到服务器，提交的网址__checkURL:', __checkURL);
@@ -32,7 +33,7 @@ package model
 		
 		public function result($data:Object):void
 		{
-			var __vo = new ReceiveStartVO($data.result);
+			var __vo:ReceiveStartVO = new ReceiveStartVO($data.result);
 			trace(__vo);
 			if(__vo.is_error)
 			{

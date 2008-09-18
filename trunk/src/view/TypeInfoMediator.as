@@ -1,6 +1,7 @@
 package view
 {
 	import model.vo.ReceiveConfigVO;
+	import model.vo.TimerRefreshVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
@@ -20,6 +21,13 @@ package view
 			return viewComponent as TypeInfo;
 		}
 		
+		private function _refresh($vo:TimerRefreshVO):void
+		{
+			_view.spareTime = $vo.spareTime;
+			_view.rightRatio = $vo.rightRatio;
+			_view.percent = $vo.percent;
+			_view.speed = $vo.speed;
+		}
 		
 		
 		override public function listNotificationInterests():Array
@@ -34,10 +42,10 @@ package view
 			{
 				case ApplicationFacade.RECEIVE_CONFIG:
 					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
-					_view.spareTime = __config.time_limit*60*1000;
+					_view.spareTime = __config.time_limit;
 					break;
 				case ApplicationFacade.TIMER_REFRESH:
-					//_refresh();
+					_refresh(notification.getBody() as TimerRefreshVO);
 					break;
 			}
 		}

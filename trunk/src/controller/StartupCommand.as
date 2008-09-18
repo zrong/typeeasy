@@ -15,6 +15,10 @@ package controller
 		{
 			facade.registerCommand(ApplicationFacade.ERROR, ErrorCommand);
 			facade.registerCommand(ApplicationFacade.SEND_START, SendStartCommand);
+			facade.registerCommand(ApplicationFacade.SEND_POST, SendPostCommand);
+			facade.registerCommand(ApplicationFacade.RECEIVE_CONFIG, ReceiveConfigCommand);
+			facade.registerCommand(ApplicationFacade.RECEIVE_POST, ReceivePostCommand);
+			facade.registerCommand(ApplicationFacade.INPUT, InputCommand);
 			
 			var __load:ConfigProxy = new ConfigProxy(); 
 			facade.registerProxy(__load);

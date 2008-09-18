@@ -29,9 +29,10 @@ package controller
 			__sendPostVO.module_id = __configVO.module_id;
 			__sendPostVO.article_id = __configVO.article_id;
 			__sendPostVO.project_id = __configVO.project_id;
-			__sendPostVO.right_per = $vo.rightRatio;
-			__sendPostVO.speed = $vo.speed;
+			__sendPostVO.right_per = $vo.rightRatio.toString();
+			__sendPostVO.speed = $vo.speed.toString();
 			__sendPostVO.type = PostType.POST;
+			return __sendPostVO;
 		}
 	}
 }

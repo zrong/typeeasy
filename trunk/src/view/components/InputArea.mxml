@@ -14,7 +14,7 @@
 			}
 			
 
-			private function setFormat($curIndex:int, $inputRight:Boolean):void
+			public function setFormat($curIndex:int, $inputRight:Boolean):void
 			{
 				/*
 				trace('输入的文字数量222:',$curIndex);
