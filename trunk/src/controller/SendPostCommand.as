@@ -2,6 +2,8 @@ package controller
 {
 	import model.ConfigProxy;
 	import model.PostProxy;
+	import model.TimerProxy;
+	import model.TotalTimerProxy;
 	import model.vo.ReceiveConfigVO;
 	import model.vo.SendPostVO;
 	import model.vo.TimerRefreshVO;
@@ -15,13 +17,17 @@ package controller
 	{
 		override public function execute(notification:INotification):void
 		{
-			var __vo:TimerRefreshVO = notification.getBody() as TimerRefreshVO;
+			var __vo:TimerRefreshVO = (facade.retrieveProxy(TimerProxy.NAME) as TimerProxy).getTimerRefreshVO();
+			var __totalTimeDone:Boolean = (notification.getType() == 'true');
 			
 			var __post:PostProxy = facade.retrieveProxy(PostProxy.NAME) as PostProxy;
-			__post.send(_buildVO(__vo));
+			__post.send(_buildVO(__vo, __totalTimeDone));
+			//发送post之后，就取消TimerProxy的注册
+			if(facade.hasProxy(TimerProxy.NAME)) facade.removeProxy(TimerProxy.NAME);
+			if(facade.hasProxy(TotalTimerProxy.NAME)) facade.removeProxy(TotalTimerProxy.NAME);
 		}
 		
-		private function _buildVO($vo:TimerRefreshVO):SendPostVO
+		private function _buildVO($vo:TimerRefreshVO, $totalTimeDone:Boolean):SendPostVO
 		{
 			var __configVO:ReceiveConfigVO = (facade.retrieveProxy(ConfigProxy.NAME) as ConfigProxy).getData() as ReceiveConfigVO;
 			var __sendPostVO:SendPostVO = new SendPostVO();
@@ -32,6 +38,7 @@ package controller
 			__sendPostVO.right_per = $vo.rightRatio.toString();
 			__sendPostVO.speed = $vo.speed.toString();
 			__sendPostVO.type = PostType.POST;
+			__sendPostVO.total_time_done = $totalTimeDone;
 			return __sendPostVO;
 		}
 	}

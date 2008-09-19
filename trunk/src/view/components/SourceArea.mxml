@@ -33,12 +33,12 @@
 			public function setFormatFromTypeIndex($index:int, $right:Boolean):void
 			{
 				//$index是1基的
-				trace('$index',$index);
-				trace('_curIndex',_curIndex);
+//				trace('$index',$index);
+//				trace('_curIndex',_curIndex);
 				if($index > _curIndex)
 				//如果当前的文字数量大于上次输入的文字数量，说明是在输入文字
 				{
-					trace('当前是增加文本');
+//					trace('当前是增加文本');
 					var _curTF:TextFormat = $right ? _passTF : _wrongTF;
 					if($index >= this.length)
 					//如果输入的字数与正确的字数相等，就将最后一个文字设置为已输入样式	
@@ -56,7 +56,7 @@
 				else
 				//如果当前文字数量小于上次输入文字数量，说明是在删除文字
 				{
-					trace('当前是减少文本');
+//					trace('当前是减少文本');
 					this.textField.setTextFormat(_normalTF, _curIndex);	//待输入的文字设置成未输入样式	
 					this.textField.setTextFormat(_waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
 				}

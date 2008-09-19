@@ -48,15 +48,15 @@ package view
 		
 		private function _changeHandler(evt:Event):void
 		{
-			trace('=================');
 			var __curIndex:int = _view.length;	//已经输入的字符的索引（1基）
 			var __rightChar:String = _rightArticle.charAt(__curIndex-1);	//根据索引得出的正确的字符
-			trace('__curIndex:',__curIndex);
-			trace('_inputLength:',_inputLength);
+//			trace('=================');
+//			trace('__curIndex:',__curIndex);
+//			trace('_inputLength:',_inputLength);
 			if(__curIndex >= _inputLength)
 			//如果字符索引大于上次输入的字符，说明是输入字符
 			{
-				trace('增加字符，当前索引：',__curIndex);
+//				trace('增加字符，当前索引：',__curIndex);
 				if(_curChar == __rightChar)
 				{
 					_inputRight = true;
@@ -65,7 +65,7 @@ package view
 				{
 					_inputRight = false;
 					_inputWrongChars.push(__curIndex);
-					trace('错误索引：',_inputWrongChars);
+//					trace('错误索引：',_inputWrongChars);
 				} 
 				_view.setFormat(__curIndex, _inputRight);	//设置文字的样式显示输入正确或错误
 			}
@@ -73,20 +73,25 @@ package view
 			//否则就是删除字符，不必设置文字样式
 			{
 				_inputRight = true;
-				trace('删除字符，当前索引：',__curIndex);
-				trace('列表中的最后一个索引：',_inputWrongChars[_inputWrongChars.length-1]);
+//				trace('删除字符，当前索引：',__curIndex);
+//				trace('列表中的最后一个索引：',_inputWrongChars[_inputWrongChars.length-1]);
 				var _wrongLength:int = _inputWrongChars.length;
 				if((_wrongLength != 0) && ((__curIndex+1) == _inputWrongChars[_wrongLength-1]))
 				{
 					
 					_inputWrongChars.pop();
 				}
-				trace('删除之后的错误索引：',_inputWrongChars)
+//				trace('删除之后的错误索引：',_inputWrongChars)
 			}
-			//如果输入的文字与正确的文字数量相等，说明输入完毕，禁止再输入
-			if(__curIndex >= _rightArticle.length)_view.editable = false;
 			//更新已经输入的文字数量
 			_inputLength = _view.length;
+			//如果输入的文字与正确的文字数量相等，说明输入完毕，禁止再输入
+			if(__curIndex >= _rightArticle.length)
+			{
+				_view.editable = false;
+				sendNotification(ApplicationFacade.SEND_POST);
+				return;	
+			}			
 			//发布文字改变的信息;
 			_refresh();				
 		}
@@ -122,8 +127,7 @@ package view
 		
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.RECEIVE_CONFIG,
-						ApplicationFacade.TIMER_REFRESH	];
+			return	[	ApplicationFacade.RECEIVE_CONFIG	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
@@ -133,9 +137,6 @@ package view
 				case ApplicationFacade.RECEIVE_CONFIG:
 					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
 					_rightArticle = __config.article;
-					break;
-				case ApplicationFacade.TIMER_REFRESH:
-					
 					break;
 			}
 		}

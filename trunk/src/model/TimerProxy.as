@@ -35,11 +35,6 @@ package model
 			return Timer(getData()).running;
 		}
 		
-		public function startTimer():void
-		{
-			Timer(getData()).start();
-		}
-		
 		override public function onRemove():void
 		{
 			Timer(getData()).stop();
@@ -60,6 +55,7 @@ package model
 		public function start():void
 		{
 			Timer(getData()).start();
+			trace('TimerProxy开始计时');
 		}
 		
 		//刷新速率
@@ -68,7 +64,7 @@ package model
 			_rightChars = $vo.rightChars;
 			_curIndex = $vo.curIndex;
 			_articleLength = $vo.articleLength;
-			trace('TimerProxy.refresh:', $vo);
+//			trace('TimerProxy.refresh:', $vo);
 			_calculate();
 		}
 		
@@ -78,11 +74,11 @@ package model
 			_percent = Math.floor(_curIndex/_articleLength*100);
 //			_speed = Math.floor(inputTA.length/((time - spareTime)/1000/60));	//瞬时速度
 			_speed = Math.floor(_curIndex/(_time/1000/60));	//真实速度
-			sendNotification(ApplicationFacade.TIMER_REFRESH, _getTimerRefreshVO());
-			trace('TimerProxy._calculate:', _getTimerRefreshVO());
+			sendNotification(ApplicationFacade.TIMER_REFRESH, getTimerRefreshVO());
+//			trace('TimerProxy._calculate:', getTimerRefreshVO());
 		}
 		
-		private function _getTimerRefreshVO():TimerRefreshVO
+		public function getTimerRefreshVO():TimerRefreshVO
 		{
 			return new TimerRefreshVO(_rightRatio, _speed, _percent, _spareTime);
 		}
@@ -118,7 +114,8 @@ package model
 			if(_spareTime <= 0)
 			{
 				Timer(getData()).stop();
-				sendNotification(ApplicationFacade.SEND_POST, _getTimerRefreshVO());
+				sendNotification(ApplicationFacade.SEND_POST);
+				trace('移除TimerProxy并停止计时!');
 			}
 			_calculate();
 		}

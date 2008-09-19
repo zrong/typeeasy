@@ -25,7 +25,7 @@ package model
 			var __postURL:String = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ).post_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__postURL, $vo);
-			trace('当打字结束的时候提交到服务器，提交的网址__postURL:', __postURL);
+			trace('当打字结束的时候提交到服务器，提交的网址__postURL:', __postURL, ',SendPostVO:', $vo);
 		}
 		
 		public function result($data:Object):void
@@ -46,7 +46,7 @@ package model
 		public function fault($info:Object):void
 		{
 			trace($info.fault);
-			sendNotification(ApplicationFacade.ERROR, $info.fault);
+			sendNotification(ApplicationFacade.ERROR, $info.fault, ErrorType.ERROR);
 		}
 	}
 }
