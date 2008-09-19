@@ -25,6 +25,7 @@ package controller
 			facade.registerProxy(new StartProxy());
 			facade.registerProxy(new PostProxy());
 			facade.registerProxy(new TimerProxy());
+			facade.registerProxy(new TotalTimerProxy());
 				
 			var __app:TypeEasy = notification.getBody() as TypeEasy;
 			facade.registerMediator(new AppMediator(__app));

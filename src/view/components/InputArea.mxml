@@ -5,12 +5,14 @@
 			private var _wrongTF:TextFormat = new TextFormat();
 			private var _rightTF:TextFormat = new TextFormat();
 			
-			private var inputLength:int;
+			private var _menu:ContextMenu;
+			private var _item:ContextMenuItem;
 			
 			private function init():void
 			{
 				_wrongTF.color = 0xff0000;
-				_rightTF.color = 0x000000;			
+				_rightTF.color = 0x000000;
+//				_buildMenu();
 			}
 			
 
@@ -22,6 +24,16 @@
 				trace('正确的文字:', __rightChar);
 				*/				
 				this.textField.setTextFormat(($inputRight?_rightTF:_wrongTF), $curIndex-1);
+			}
+			
+			//本来想隐藏上下文菜单，但不管用
+			private function _buildMenu():void
+			{
+				_menu = new ContextMenu();
+				_item = new ContextMenuItem('测试菜单');
+				_menu.hideBuiltInItems();
+				_menu.customItems.push(_item);
+				this.contextMenu = _menu;
 			}
 		]]>
 	</mx:Script>

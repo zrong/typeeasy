@@ -22,7 +22,7 @@ package model.vo
 			time_limit = parseInt($xml.time_limit)*60*1000;
 			check_url = $xml.check_url;
 			post_url = $xml.post_url;
-			remain_total_time = Number($xml.remain_total_time);	
+			remain_total_time = Number($xml.remain_total_time)*60*1000;	
 			article = $xml.article;	
 		}
 		
