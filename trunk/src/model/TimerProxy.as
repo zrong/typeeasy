@@ -7,6 +7,8 @@ package model
 	import model.vo.TimerRefreshVO;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
+	
+	import type.PostType;
 
 	public class TimerProxy extends Proxy
 	{
@@ -114,7 +116,7 @@ package model
 			if(_spareTime <= 0)
 			{
 				Timer(getData()).stop();
-				sendNotification(ApplicationFacade.SEND_POST);
+				sendNotification(ApplicationFacade.SEND_POST, false, PostType.TIMER_DONE);
 				trace('移除TimerProxy并停止计时!');
 			}
 			_calculate();

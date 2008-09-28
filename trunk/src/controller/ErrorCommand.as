@@ -51,7 +51,8 @@ package controller
 		
 		private function _sendAlert($info:String):void
 		{
-			JS.alert($info, '信息');
+//			JS.alert($info, '信息');
+			_sendFlashAlert($info);
 		}
 		
 		private function _sendError($error:String):void
@@ -61,7 +62,8 @@ package controller
 			if(facade.hasProxy(TimerProxy.NAME)) facade.removeProxy(TimerProxy.NAME);
 			if(facade.hasProxy(TotalTimerProxy.NAME)) facade.removeProxy(TotalTimerProxy.NAME);
 			Application.application.removeAllChildren();
-			JS.alert($error,'錯誤');
+//			JS.alert($error,'錯誤');
+			Alert.show($error, '錯誤');
 		}
 	}
 }

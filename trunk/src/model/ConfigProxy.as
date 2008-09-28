@@ -1,5 +1,6 @@
 package model
 {
+	import flash.external.ExternalInterface;
 	import flash.net.URLVariables;
 	
 	import model.dao.HTTPDelegate;
@@ -22,6 +23,10 @@ package model
 		public function ConfigProxy(data:Object=null)
 		{
 			super(NAME, data);
+			if(ExternalInterface.available)
+			{
+				ExternalInterface.addCallback('rightClick', function(){});
+			}
 		}
 		
 		public function send():void

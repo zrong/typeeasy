@@ -35,7 +35,7 @@ package controller
 			
 			try
 			{
-				trace('调用getParam');
+				trace('调用__load.send');
 				__load.send();
 			}
 			catch($err:Error)

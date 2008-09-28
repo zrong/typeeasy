@@ -3,10 +3,9 @@ package model
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
-	import model.vo.InputVO;
-	import model.vo.TimerRefreshVO;
-	
 	import org.puremvc.as3.patterns.proxy.Proxy;
+	
+	import type.PostType;
 
 	public class TotalTimerProxy extends Proxy
 	{
@@ -58,7 +57,7 @@ package model
 			trace('总时间到！');
 			Timer(getData()).stop();
 			//在剩余的全部时间到了之后，不管打字的时间到没到，强制提交
-			sendNotification(ApplicationFacade.SEND_POST, null, 'true');
+			sendNotification(ApplicationFacade.SEND_POST, true, PostType.TOTAL_TIMER_DONE);
 		}
 		
 		
