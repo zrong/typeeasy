@@ -32,11 +32,12 @@ package model
 		public function send():void
 		{
 			var __param:Object = Application.application.parameters;
-			if(__param.config == null)
-			{
-				throw new Error('非法调用！');
-			}
+//			if(__param.config == null)
+//			{
+//				throw new Error('非法调用！');
+//			}
 			CONFIG_URL = __param.config;
+			CONFIG_URL = 'config.xml';
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(CONFIG_URL, buildVariable(__param));
 		}

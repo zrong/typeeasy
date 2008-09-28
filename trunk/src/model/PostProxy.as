@@ -14,16 +14,16 @@ package model
 	public class PostProxy extends Proxy implements IResponder
 	{
 		public static const NAME:String = 'PostProxy';
-		private var _postType:String;
+		private var _doneType:String;
 		
 		public function PostProxy(data:Object=null)
 		{
 			super(NAME, data);
 		}
 		
-		public function send($vo:SendPostVO, $postType:String):void
+		public function send($vo:SendPostVO):void
 		{
-			_postType = $postType;
+			_doneType = $vo.done_type;
 			var __postURL:String = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ).post_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__postURL, $vo);
@@ -41,7 +41,7 @@ package model
 			else
 			{
 				setData(__vo);
-				sendNotification(ApplicationFacade.RECEIVE_POST, __vo, _postType);
+				sendNotification(ApplicationFacade.RECEIVE_POST, __vo, _doneType);
 			}
 		}
 		

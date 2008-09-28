@@ -48,8 +48,8 @@ package model
 		
 		public function fault($info:Object):void
 		{
-			trace($info.fault);
-			sendNotification(ApplicationFacade.ERROR, $info.fault, ErrorType.ERROR);
+			trace('startProxy调用失败', $info.fault);
+//			sendNotification(ApplicationFacade.ERROR, $info.fault, ErrorType.ERROR);
 		}
 		
 	}
