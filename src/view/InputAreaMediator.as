@@ -9,6 +9,8 @@ package view
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
+	import type.PostType;
+	
 	import view.components.InputArea;
 
 	public class InputAreaMediator extends Mediator
@@ -89,7 +91,7 @@ package view
 			if(__curIndex >= _rightArticle.length)
 			{
 				_view.editable = false;
-				sendNotification(ApplicationFacade.SEND_POST);
+				sendNotification(ApplicationFacade.SEND_POST, false, PostType.INPUT_DONE);
 				return;	
 			}			
 			//发布文字改变的信息;

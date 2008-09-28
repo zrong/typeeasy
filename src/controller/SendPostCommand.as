@@ -18,16 +18,16 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			var __vo:TimerRefreshVO = (facade.retrieveProxy(TimerProxy.NAME) as TimerProxy).getTimerRefreshVO();
-			var __totalTimeDone:Boolean = (notification.getType() == 'true');
-			
+			var __totalTimeDone:String = Boolean(notification.getBody()) ? 'true' : 'false';
+			var __postType:String = notification.getType();
 			var __post:PostProxy = facade.retrieveProxy(PostProxy.NAME) as PostProxy;
-			__post.send(_buildVO(__vo, __totalTimeDone));
+			__post.send(_buildVO( __vo, __totalTimeDone ), __postType);
 			//发送post之后，就取消TimerProxy的注册
 			if(facade.hasProxy(TimerProxy.NAME)) facade.removeProxy(TimerProxy.NAME);
 			if(facade.hasProxy(TotalTimerProxy.NAME)) facade.removeProxy(TotalTimerProxy.NAME);
 		}
 		
-		private function _buildVO($vo:TimerRefreshVO, $totalTimeDone:Boolean):SendPostVO
+		private function _buildVO($vo:TimerRefreshVO, $totalTimeDone:String='false'):SendPostVO
 		{
 			var __configVO:ReceiveConfigVO = (facade.retrieveProxy(ConfigProxy.NAME) as ConfigProxy).getData() as ReceiveConfigVO;
 			var __sendPostVO:SendPostVO = new SendPostVO();
