@@ -116,7 +116,7 @@ package model
 			if(_spareTime <= 0)
 			{
 				Timer(getData()).stop();
-				sendNotification(ApplicationFacade.SEND_POST, false, PostType.TIMER_DONE);
+				sendNotification(ApplicationFacade.SEND_POST, PostType.TIMER_DONE);
 				trace('移除TimerProxy并停止计时!');
 			}
 			_calculate();

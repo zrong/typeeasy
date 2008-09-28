@@ -57,7 +57,7 @@ package model
 			trace('总时间到！');
 			Timer(getData()).stop();
 			//在剩余的全部时间到了之后，不管打字的时间到没到，强制提交
-			sendNotification(ApplicationFacade.SEND_POST, true, PostType.TOTAL_TIMER_DONE);
+			sendNotification(ApplicationFacade.SEND_POST, PostType.TOTAL_TIMER_DONE);
 		}
 		
 		

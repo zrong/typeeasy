@@ -9,6 +9,7 @@ package view
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
+	import type.ErrorType;
 	import type.PostType;
 	
 	import view.components.InputArea;
@@ -21,7 +22,7 @@ package view
 		private var _curChar:String;		//当前输入的字符
 		private var _inputRight:Boolean;	//当前的字符是否输入正确
 		private var _inputWrongChars:Array;	//输入错误的字符索引(1基)数组
-		private var _inputLength:int;		//已经输入的字符的数量
+		private var _inputLength:int;		//已经输入的字符的数量，此数量与下一次打字的时候进行比对，看用户是否是粘贴内容
 		
 		public function InputAreaMediator(viewComponent:Object=null)
 		{
@@ -51,6 +52,7 @@ package view
 		private function _changeHandler(evt:Event):void
 		{
 			var __curIndex:int = _view.length;	//已经输入的字符的索引（1基）
+			trace('已输入：', _inputLength, '，当前索引：', __curIndex);
 			var __rightChar:String = _rightArticle.charAt(__curIndex-1);	//根据索引得出的正确的字符
 //			trace('=================');
 //			trace('__curIndex:',__curIndex);
@@ -83,7 +85,7 @@ package view
 					
 					_inputWrongChars.pop();
 				}
-//				trace('删除之后的错误索引：',_inputWrongChars)
+				trace('删除之后的错误索引：',_inputWrongChars)
 			}
 			//更新已经输入的文字数量
 			_inputLength = _view.length;
@@ -91,7 +93,7 @@ package view
 			if(__curIndex >= _rightArticle.length)
 			{
 				_view.editable = false;
-				sendNotification(ApplicationFacade.SEND_POST, false, PostType.INPUT_DONE);
+				sendNotification(ApplicationFacade.SEND_POST, PostType.INPUT_DONE);
 				return;	
 			}			
 			//发布文字改变的信息;
