@@ -9,7 +9,6 @@ package view
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
-	import type.ErrorType;
 	import type.PostType;
 	
 	import view.components.InputArea;
@@ -47,47 +46,24 @@ package view
 			{
 				sendNotification(ApplicationFacade.SEND_START);
 			}
-			trace('_textInput:', _view.length);
 		}
 		
 		private function _changeHandler(evt:Event):void
 		{
 			var __curIndex:int = _view.length;	//已经输入的字符的索引（1基）
 			trace('已输入：', _inputLength, '，当前索引：', __curIndex);
-			var __rightChar:String = _rightArticle.charAt(__curIndex-1);	//根据索引得出的正确的字符
 //			trace('=================');
 //			trace('__curIndex:',__curIndex);
 //			trace('_inputLength:',_inputLength);
 			if(__curIndex >= _inputLength)
 			//如果字符索引大于上次输入的字符，说明是输入字符
 			{
-//				trace('增加字符，当前索引：',__curIndex);
-				trace('_curChar:', _curChar, '_rightChar:', __rightChar);
-				if(_curChar == __rightChar)
-				{
-					_inputRight = true;
-				}
-				else
-				{
-					_inputRight = false;
-					_inputWrongChars.push(__curIndex);
-//					trace('错误索引：',_inputWrongChars);
-				} 
-				_view.setFormat(__curIndex, _inputRight);	//设置文字的样式显示输入正确或错误
+				_addText(__curIndex);
 			}
 			else
 			//否则就是删除字符，不必设置文字样式
 			{
-				_inputRight = true;
-//				trace('删除字符，当前索引：',__curIndex);
-//				trace('列表中的最后一个索引：',_inputWrongChars[_inputWrongChars.length-1]);
-				var _wrongLength:int = _inputWrongChars.length;
-				if((_wrongLength != 0) && ((__curIndex+1) == _inputWrongChars[_wrongLength-1]))
-				{
-					
-					_inputWrongChars.pop();
-				}
-				trace('删除之后的错误索引：',_inputWrongChars)
+				_delText(__curIndex);
 			}
 			//更新已经输入的文字数量
 			_inputLength = _view.length;
@@ -102,6 +78,45 @@ package view
 			_refresh();				
 		}
 		
+		//输入文字时候的操作
+		private function _addText($curIndex:int):void
+		{
+			trace('增加字符，当前索引：',$curIndex);
+			var __rightChar:String = _rightArticle.substr(_inputLength, _curChar.length);	//根据索引得出的正确的字符
+			trace('_curChar:', _curChar, '_rightChar:', __rightChar);
+			if(_curChar == __rightChar)
+			{
+				_inputRight = true;
+			}
+			else
+			{
+				_inputRight = false;
+				_inputWrongChars.push($curIndex);
+//				trace('错误索引：',_inputWrongChars);
+			} 
+			_view.setFormat($curIndex, _inputRight);	//设置文字的样式显示输入正确或错误
+		}
+		
+		//删除文字时候的操作
+		private function _delText($curIndex:int):void
+		{
+			_inputRight = true;
+//			trace('删除字符，当前索引：',__curIndex);
+//			trace('列表中的最后一个索引：',_inputWrongChars[_inputWrongChars.length-1]);
+			var _wrongLength:int = _inputWrongChars.length;
+			if((_wrongLength != 0) && (($curIndex+1) == _inputWrongChars[_wrongLength-1]))
+			{
+					
+				_inputWrongChars.pop();
+			}
+			trace('删除之后的错误索引：',_inputWrongChars)
+		}
+		
+		private function _calculateWrong():Array
+		{
+			
+		}
+		//发送更新文字信息
 		private function _refresh():void
 		{
 			var __vo:InputVO = new InputVO(	_inputLength, 
