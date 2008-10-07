@@ -30,7 +30,7 @@
 				_curIndex = 0;			
 			}
 			
-			public function setFormatFromTypeIndex($index:int, $right:Boolean):void
+			public function setFormatFromTypeIndex($index:int, $rightBoolList:Array):void
 			{
 				//$index是1基的
 //				trace('$index',$index);
@@ -39,26 +39,34 @@
 				//如果当前的文字数量大于上次输入的文字数量，说明是在输入文字
 				{
 //					trace('当前是增加文本');
-					var _curTF:TextFormat = $right ? _passTF : _wrongTF;
-					if($index >= this.length)
-					//如果输入的字数与正确的字数相等，就将最后一个文字设置为已输入样式	
+					for(var i:int=0; i<$rightBoolList.length; i++)
 					{
-						this.textField.setTextFormat(_curTF, $index-1, this.length);
-					}
-					else
-					//否则就按要求设置
-					{				
-						
-						this.textField.setTextFormat(_curTF, _curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
-						this.textField.setTextFormat(_waitTF, $index, $index + 1);	//将已输入文字的后一个文字设置成待输入样式		
+						var _curTF:TextFormat = $rightBoolList[i] ? _passTF : _wrongTF;
+						if($index >= this.length)
+						//如果输入的字数与正确的字数相等，就将最后一个文字设置为已输入样式	
+						{
+							setTextFormat(_curTF, $index+i, this.length);
+						}
+						else
+						//否则就按要求设置
+						{				
+							
+							this.textField.setTextFormat(_curTF, _curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
+							this.textField.setTextFormat(_waitTF, $index, $index + 1);	//将已输入文字的后一个文字设置成待输入样式		
+						}
 					}
 				}
 				else
 				//如果当前文字数量小于上次输入文字数量，说明是在删除文字
 				{
 //					trace('当前是减少文本');
-					this.textField.setTextFormat(_normalTF, _curIndex);	//待输入的文字设置成未输入样式	
-					this.textField.setTextFormat(_waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
+					for(var j:int=0; j<$rightBoolList.length; j++)
+					{
+						
+						setTextFormat($rightBoolList ? _passTF : _wrongTF, j, j+1);
+					}
+					setTextFormat(_normalTF, _curIndex);		//待输入的文字设置成未输入样式	
+					setTextFormat(_waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
 				}
 				_curIndex = $index;
 				_setScroll($index);
@@ -67,6 +75,15 @@
 			public function setTextFormat($format:TextFormat, $beginIndex:int=-1, $endIndex:int = -1):void
 			{
 				this.textField.setTextFormat($format, $beginIndex, $endIndex);
+			}
+			
+			public function setFormat($inputLength:int, $inputRight:Array=null):void
+			{
+				if($inputRight == null) this.textField.setTextFormat(_wrongTF, $inputLength);
+				for(var i:int=0; i<$inputRight.length; i++)
+				{
+					setTextFormat(($inputRight[i]?_passTF:_wrongTF), $inputLength+i);
+				}	
 			}
 			
 			private function _setScroll($charIndex:int):void

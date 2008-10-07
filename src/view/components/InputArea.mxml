@@ -16,14 +16,18 @@
 			}
 			
 
-			public function setFormat($curIndex:int, $inputRight:Boolean):void
+			public function setFormat($inputLength:int, $inputRight:Array=null):void
 			{
-				/*
-				trace('输入的文字数量222:',$curIndex);
-				trace('当前输入的文字:', _curChar);
-				trace('正确的文字:', __rightChar);
-				*/				
-				this.textField.setTextFormat(($inputRight?_rightTF:_wrongTF), $curIndex-1);
+				if($inputRight == null) this.textField.setTextFormat(_wrongTF, $inputLength);
+				for(var i:int=0; i<$inputRight.length; i++)
+				{
+					this.textField.setTextFormat(($inputRight[i]?_rightTF:_wrongTF), $inputLength+i);
+				}	
+			}
+			
+			public function get caretIndex():int
+			{
+				return this.textField.caretIndex;
 			}
 			
 			//本来想隐藏上下文菜单，但不管用
