@@ -25,7 +25,7 @@ package model
 			super(NAME, data);
 			if(ExternalInterface.available)
 			{
-				ExternalInterface.addCallback('rightClick', function(){});
+				ExternalInterface.addCallback('rightClick', function():void{});
 			}
 		}
 		

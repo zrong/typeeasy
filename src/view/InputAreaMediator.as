@@ -47,6 +47,7 @@ package view
 			{
 				sendNotification(ApplicationFacade.SEND_START);
 			}
+			trace('_textInput:', _view.length);
 		}
 		
 		private function _changeHandler(evt:Event):void
@@ -61,6 +62,7 @@ package view
 			//如果字符索引大于上次输入的字符，说明是输入字符
 			{
 //				trace('增加字符，当前索引：',__curIndex);
+				trace('_curChar:', _curChar, '_rightChar:', __rightChar);
 				if(_curChar == __rightChar)
 				{
 					_inputRight = true;
@@ -103,9 +105,9 @@ package view
 		private function _refresh():void
 		{
 			var __vo:InputVO = new InputVO(	_inputLength, 
-										_inputRight, 
-										_inputLength-_inputWrongChars.length, 
-										_rightArticle.length);											
+											_inputRight, 
+											_inputLength-_inputWrongChars.length, 
+											_rightArticle.length);											
 			sendNotification(ApplicationFacade.INPUT, __vo);
 		}
 		
