@@ -4,14 +4,14 @@ import flash.events.HTTPStatusEvent;
 import flash.events.IOErrorEvent;
 import flash.events.TextEvent;
 import flash.events.TimerEvent;
+import flash.external.ExternalInterface;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.net.URLVariables;
 import flash.utils.Timer;
 
-import mx.core.Application;
+import mx.controls.Alert;
 
-import net.zengrong.logging.Logger;
 
 private var loader:URLLoader;
 private var time:int = 60000;	//限制的时间
@@ -34,7 +34,6 @@ private var speed:Number =0;	//打字速度
 
 private function init():void
 {
-	Logger.includeLevel = true;
 	loader = new URLLoader();
 	loader.addEventListener(Event.COMPLETE, loadCompleteHandler);
 	loader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
@@ -54,8 +53,8 @@ private function init():void
 
 private function loadCompleteHandler(evt:Event):void
 {
-	Logger.info('loadCompleteHandler:'+evt.toString());
-	Logger.info('evt.target.data:'+evt.target.data);
+	trace('loadCompleteHandler:'+evt.toString());
+//	trace('evt.target.data:'+evt.target.data);
 	try
 	{
 		var _xml:XML = XML(evt.target.data);
@@ -73,7 +72,7 @@ private function loadCompleteHandler(evt:Event):void
 		alert('无法转换成XML类型:'+err.toString());
 		//reset();
 	}	
-	Logger.info('_xml:'+_xml.toString());
+	trace('_xml:'+_xml.toString());
 	switch(_xml.type.toString())
 	{
 		case 'config':
@@ -95,8 +94,8 @@ private function loadCompleteHandler(evt:Event):void
 
 private function httpStatusHandler(evt:HTTPStatusEvent):void
 {
-	Logger.info('HTTPStatusHandler:'+evt.toString());
-	Logger.info(evt.status);
+	trace('HTTPStatusHandler:'+evt.toString());
+	trace(evt.status);
 }
 
 //===========================================
@@ -105,8 +104,8 @@ private function httpStatusHandler(evt:HTTPStatusEvent):void
 
 private function ioErrorHandler(evt:IOErrorEvent):void
 {
-	Logger.error('ioErrorhandler:'+ evt.toString());
-	Logger.info(evt.text);	
+	trace('ioErrorhandler:'+ evt.toString());
+	trace(evt.text);	
 }
 
 //===========================================
@@ -122,13 +121,13 @@ private function textInputHandler(evt:TextEvent):void
 	{
 		inputTimer.start();
 		//在第一次输入的时候通知服务器开始计时
-		Logger.info(postURL);
+		trace(postURL);
 		var _var:URLVariables = new URLVariables('is_start=true&type=start');
-		Logger.info(_var.is_start);
+		trace(_var.is_start);
 		var _request:URLRequest = new URLRequest(checkURL);
 		_request.data = _var;		
 		load(_request);
-		Logger.debug('当打字开始的时候提交到服务器，提交的网址checkURL:{1}', checkURL);
+//		trace('当打字开始的时候提交到服务器，提交的网址checkURL:{1}', checkURL);
 	}
 }
 
@@ -185,6 +184,7 @@ private function changeHandler(evt:Event):void
 private function initNet():void
 {
 	var _param:Object = Application.application.parameters;
+//	var _param:Object = {config:'config.xml'};
 	if(_param.config == null)
 	{
 		article = '非法调用！';
@@ -200,7 +200,7 @@ private function initNet():void
 			_var[i] = _param[i];
 		}
 	}
-	Logger.info(_param);
+	trace(_param);
 	var _request:URLRequest = new URLRequest(_param.config);
 	_request.data = _var;
 	load(_request);
@@ -301,10 +301,10 @@ private function loadTest($data:XML):void
  **/
 private function loadConfig($data:XML):void
 {
-	Logger.info('loadConfig执行，第一次提交');
+	trace('loadConfig执行，第一次提交');
 	postURL = $data.post_url;
 	checkURL = $data.check_url;
-	Logger.info('postURL:' + postURL);
+	trace('postURL:' + postURL);
 	article = $data.article;
 	time = parseInt($data.time_limit)*60*1000;
 	spareTime = time;
@@ -321,7 +321,7 @@ private function loadConfig($data:XML):void
  **/
 private function loadStart($data:XML):void
 {
-	Logger.info('loadStart执行，第二次提交返回：\n{1}',$data.toString());
+	trace('loadStart执行，第二次提交返回：\n{1}',$data.toString());
 }
 
 //===========================================
@@ -333,8 +333,8 @@ private function loadStart($data:XML):void
  **/
 private function loadPost($data:XML):void
 {
-	Logger.info('loadPost第三次提交返回：');
-	Logger.info($data.toString());
+	trace('loadPost第三次提交返回：');
+	trace($data.toString());
 	var _str:String = '正确率：'+rightRatio+',速度：'+speed;
 	delFlash($data.show_msg, $data.next_url);
 }
@@ -357,7 +357,14 @@ private function refresh():void
 
 private function alert($str:String):void
 {
-	ExternalInterface.call('alert', $str);
+	if(ExternalInterface.available)
+	{
+		ExternalInterface.call('alert', $str);
+	}
+	else
+	{
+		Alert.show($str);
+	}
 }
 
 //===========================================
