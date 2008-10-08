@@ -68,11 +68,20 @@ package model
 			_articleLength = $vo.articleLength;
 //			trace('TimerProxy.refresh:', $vo);
 			_calculate();
+			trace('TimerProxy.refresh:',_rightChars)
 		}
 		
 		private function _calculate():void
 		{
-			_rightRatio = Math.floor(_rightChars/_curIndex*1000)/10;
+			//_curIndex等于0的时候，也就是没有输入文字的时候，这是除数为0，不能计算，因此直接设置正确率为0
+			if(_curIndex == 0)
+			{
+				_rightRatio = 0;
+			}
+			else
+			{
+				_rightRatio = Math.floor(_rightChars/_curIndex*1000)/10;
+			}
 			_percent = Math.floor(_curIndex/_articleLength*100);
 //			_speed = Math.floor(inputTA.length/((time - spareTime)/1000/60));	//瞬时速度
 			_speed = Math.floor(_curIndex/(_time/1000/60));	//真实速度

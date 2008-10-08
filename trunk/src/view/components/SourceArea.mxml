@@ -2,74 +2,32 @@
 <mx:TextArea xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" editable="false" selectable="false" tabEnabled="false" focusEnabled="false" backgroundColor="#FDF9D5" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
-			private var _passTF:TextFormat = new TextFormat();	//已经输入过的字符的样式
-			private var _normalTF:TextFormat = new TextFormat();	//没有输入的字符的样式
-			private var _waitTF:TextFormat = new TextFormat();	//等待输入的当前字符的样式
-			private var _wrongTF:TextFormat = new TextFormat();	//输入错误的字符的样式
+			public static var PASS_TF:TextFormat = new TextFormat();	//已经输入过的字符的样式
+			public static var NORMAL_TF:TextFormat = new TextFormat();	//没有输入的字符的样式
+			public static var WAIT_TF:TextFormat = new TextFormat();	//等待输入的当前字符的样式
+			public static var WRONG_TF:TextFormat = new TextFormat();	//输入错误的字符的样式
 			
 			private var _curIndex:int = 0;	//保存当前等待输入的字符的索引，1基
 			
 			private function init():void
 			{
-				_passTF.color = 0xDDDDDD;
-				_passTF.underline = false;
-				_normalTF.color = 0x000000;
-				_normalTF.underline = false;
-				_waitTF.color = 0x000000;
-				_waitTF.underline = true;
-				_wrongTF.color = 0xFF0000;
-				_wrongTF.underline = false;
+				PASS_TF.color = 0xDDDDDD;
+				PASS_TF.underline = false;
+				NORMAL_TF.color = 0x000000;
+				NORMAL_TF.underline = false;
+				WAIT_TF.color = 0x000000;
+				WAIT_TF.underline = true;
+				WRONG_TF.color = 0xFF0000;
+				WRONG_TF.underline = false;
 				textField.addEventListener(Event.SCROLL, scrollHandler1);
 				//reset();
 			}
 			
 			public function reset():void
 			{
-				textField.setTextFormat(_normalTF);
-				textField.setTextFormat(_waitTF, 0);	//设置第一个字为待输入样式
-				_curIndex = 0;			
-			}
-			
-			public function setFormatFromTypeIndex($index:int, $rightBoolList:Array):void
-			{
-				//$index是1基的
-//				trace('$index',$index);
-//				trace('_curIndex',_curIndex);
-				if($index > _curIndex)
-				//如果当前的文字数量大于上次输入的文字数量，说明是在输入文字
-				{
-//					trace('当前是增加文本');
-					for(var i:int=0; i<$rightBoolList.length; i++)
-					{
-						var _curTF:TextFormat = $rightBoolList[i] ? _passTF : _wrongTF;
-						if($index >= this.length)
-						//如果输入的字数与正确的字数相等，就将最后一个文字设置为已输入样式	
-						{
-							setTextFormat(_curTF, $index+i, this.length);
-						}
-						else
-						//否则就按要求设置
-						{				
-							
-							this.textField.setTextFormat(_curTF, _curIndex, $index + 1);	//将已经输入的文字设置成已输入样式	
-							this.textField.setTextFormat(_waitTF, $index, $index + 1);	//将已输入文字的后一个文字设置成待输入样式		
-						}
-					}
-				}
-				else
-				//如果当前文字数量小于上次输入文字数量，说明是在删除文字
-				{
-//					trace('当前是减少文本');
-					for(var j:int=0; j<$rightBoolList.length; j++)
-					{
-						
-						setTextFormat($rightBoolList ? _passTF : _wrongTF, j, j+1);
-					}
-					setTextFormat(_normalTF, _curIndex);		//待输入的文字设置成未输入样式	
-					setTextFormat(_waitTF, $index, $index+1);	//将删除的文字设置成待输入样式
-				}
-				_curIndex = $index;
-				_setScroll($index);
+				textField.setTextFormat(NORMAL_TF);
+				textField.setTextFormat(WAIT_TF, 0);	//设置第一个字为待输入样式
+				_curIndex = 0;
 			}
 			
 			public function setTextFormat($format:TextFormat, $beginIndex:int=-1, $endIndex:int = -1):void
@@ -79,14 +37,14 @@
 			
 			public function setFormat($inputLength:int, $inputRight:Array=null):void
 			{
-				if($inputRight == null) this.textField.setTextFormat(_wrongTF, $inputLength);
+				if($inputRight == null) setTextFormat(WRONG_TF, $inputLength);
 				for(var i:int=0; i<$inputRight.length; i++)
 				{
-					setTextFormat(($inputRight[i]?_passTF:_wrongTF), $inputLength+i);
+					setTextFormat(($inputRight[i]?PASS_TF:WRONG_TF), $inputLength+i);
 				}	
 			}
 			
-			private function _setScroll($charIndex:int):void
+			public function setScroll($charIndex:int):void
 			{
 				this.textField.scrollV = this.textField.getLineIndexOfChar($charIndex);
 			}
