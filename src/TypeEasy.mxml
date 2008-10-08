@@ -11,7 +11,7 @@
 			<view:SourceArea id="sourceTA"/>
 		</mx:VBox>
 		<mx:VBox width="100%" height="50%">
-			<mx:Label text="请单击此输入框使其边框变成红色，然后开始输入：" fontWeight="bold" color="#56931B"/>
+			<mx:Label text="请单击此输入框使其中出现输入点闪烁，然后开始输入：" fontWeight="bold" color="#56931B"/>
 			<view:InputArea id="inputTA"/>
 		</mx:VBox>		
 	</mx:VDividedBox>
@@ -22,12 +22,13 @@
 			private function init():void
 			{
 				facade.startup(this);
+				_buildMenu();
 			}
 			
 			private function _buildMenu():void
 			{
 				var __menu:ContextMenu = new ContextMenu();
-				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.27');
+				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.29');
 				__menu.customItems = [__menuItem];
 				__menu.hideBuiltInItems();
 				this.contextMenu = __menu;
