@@ -119,25 +119,45 @@ package view
 		//删除文字时候的操作
 		private function _delText($curIndex:int):void
 		{
-			trace('删除字符，当前索引：',$curIndex,'光标所在的索引：', _view.caretIndex,'已输入的文字：',_inputLength);
-			_inputWrongChars = [];
+			var __caretIndex:int = _view.caretIndex;
 			_inputRight = [];
-			for(var i:int=0; i<$curIndex; i++)
+			trace('删除字符，删除前的已输入文字索引：'+_inputLength, '最终输入文字索引：'+$curIndex,'光标所在的索引：'+__caretIndex);
+			//删除文字有三种情况：1、从最后面按“回退”键删除；2、从文字中间按“回退”或“删除”键删除；3、选中一段文字然后删除。
+			trace('删除前的错误索引：',_inputWrongChars);
+			//如果光标所在位置与最终文字索引相等，并且删除前已经输入的文字仅比删除后的文字多1个，说明是第1种情况
+			//如果在光标所在位置与最终文字索引相等的前提下，删除前已经输入的文字比删除后的文字多了超过一个，是第3种情况的一种特殊表现，就是从输入文字的末尾选择一段文字删除。		
+			if(__caretIndex == $curIndex && (_inputLength - $curIndex) == 1)
 			{
-				if(_view.text.charAt(i) != _rightArticle.charAt(i))
+				if(_inputWrongChars.length == 0) return;
+				trace('错误索引列表中的最后一个索引：', _inputWrongChars[_inputWrongChars.length-1]);
+				if(_inputWrongChars[_inputWrongChars.length-1] == $curIndex)
 				{
-					_inputWrongChars.push(i);
+					_inputWrongChars.pop();
+				}
+			}
+			//否则就是第2、3种情况
+			else
+			{
+				//删除错误索引列表中，光标所在位置索引之后的所有错误索引。因为从中间删除文字后，由于文字顺序的改变，后面的文字都应该算错误。
+				//虽然有可能会有相同的文字因为出现在不同的顺序，碰巧对了（很有可能这样），但由于不是用户自行输入的，也不能算对
+				//因此光标之后的所有文字，都应该算错误文字，将这些文字的索引重新写入到错误索引列表中
+				for(var __index:int=0; __index<_inputWrongChars.length; __index++)
+				{
+					if(_inputWrongChars[__index] >= __caretIndex)
+					{
+						_inputWrongChars.splice(__index);
+						break;
+					}
+				}
+				//将光标后面的所有文字都算做错误文字，将他们的索引写入错误索引列表
+				for(var __wrongIndex:int=__caretIndex; __wrongIndex<$curIndex; __wrongIndex++)
+				{
+					_inputWrongChars.push(__wrongIndex);
 					_inputRight.push(false);
 				}
-				else
-				{
-					_inputRight.push(true);
-				}
-				trace($curIndex);
+				_view.setFormat(__caretIndex, _inputRight);	//设置文字的样式显示输入正确或错误
 			}
-			trace('删除后的错误数组索引：', _inputWrongChars);
-			_view.setFormat(0, _inputRight);	//设置文字的样式显示输入正确或错误
-			
+			trace('删除后的错误索引：',_inputWrongChars);
 		}
 		
 		//计算输入文字中哪些是错误的，并返回这些错误相对于输入的文字串的索引。
