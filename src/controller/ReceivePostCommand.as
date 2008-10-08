@@ -12,12 +12,12 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			var __vo:ReceivePostVO = notification.getBody() as ReceivePostVO;
-			_delFlash(__vo.show_msg, __vo.next_url);
+			_delFlash(__vo.show_msg, __vo.next_url, notification.getType());
 		}
 		
-		private function _delFlash($msg:String, $url:String):void
+		private function _delFlash($msg:String, $url:String, $doneType:String):void
 		{
-			ExternalInterface.call('delFlash', $msg, $url);
+			ExternalInterface.call('delFlash', $msg, $url, $doneType);
 		}
 	}
 }

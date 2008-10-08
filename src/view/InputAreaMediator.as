@@ -10,6 +10,7 @@ package view
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
+	import type.ChangeType;
 	import type.PostType;
 	
 	import view.components.InputArea;
@@ -23,6 +24,7 @@ package view
 		private var _inputRight:Array;	//当前的字符是否输入正确
 		private var _inputWrongChars:Array;	//输入错误的字符索引(1基)数组
 		private var _inputLength:int;		//已经输入的字符的数量，此数量与下一次打字的时候进行比对，看用户是否是粘贴内容
+		private var _chageType:String;
 		
 		public function InputAreaMediator(viewComponent:Object=null)
 		{
@@ -51,7 +53,7 @@ package view
 		
 		private function _changeHandler(evt:Event):void
 		{
-			var __curIndex:int = _view.length;	//已经输入的字符的索引（1基）
+			var __curIndex:int = (_view.length > _rightArticle.length) ? _rightArticle.length : _view.length;	//已经输入的字符的索引（1基）
 			trace('已输入：', _inputLength, '，当前索引：', __curIndex);
 //			trace('=================');
 //			trace('__curIndex:',__curIndex);
@@ -82,8 +84,11 @@ package view
 		//输入文字时候的操作
 		private function _addText():void
 		{
+			_chageType = ChangeType.ADD;
 			_inputRight = [];
 			var __rightChar:String = _rightArticle.substr(_inputLength, _curChar.length);	//根据索引得出的正确的字符
+			//如果正确的字符数小于输入的字符数，就截取输入的字符，仅截取等于正确字符数的数量。出现这种情况的原因是用户输入到最后，一次输入的文字比最后仅剩的文字多。或者是用户使用粘贴进行输入。
+			if(__rightChar.length < _curChar.length) _curChar = _curChar.substr(0, __rightChar.length);
 			trace('_curChar:', _curChar, '_rightChar:', __rightChar);
 			if(_curChar == __rightChar)
 			{
@@ -128,6 +133,7 @@ package view
 			//如果在光标所在位置与最终文字索引相等的前提下，删除前已经输入的文字比删除后的文字多了超过一个，是第3种情况的一种特殊表现，就是从输入文字的末尾选择一段文字删除。		
 			if(__caretIndex == $curIndex && (_inputLength - $curIndex) == 1)
 			{
+				_chageType = ChangeType.DEL_LAST;
 				if(_inputWrongChars.length == 0) return;
 				trace('错误索引列表中的最后一个索引：', _inputWrongChars[_inputWrongChars.length-1]);
 				if(_inputWrongChars[_inputWrongChars.length-1] == $curIndex)
@@ -138,6 +144,7 @@ package view
 			//否则就是第2、3种情况
 			else
 			{
+				_chageType = ChangeType.DEL_SPECIAL;
 				//删除错误索引列表中，光标所在位置索引之后的所有错误索引。因为从中间删除文字后，由于文字顺序的改变，后面的文字都应该算错误。
 				//虽然有可能会有相同的文字因为出现在不同的顺序，碰巧对了（很有可能这样），但由于不是用户自行输入的，也不能算对
 				//因此光标之后的所有文字，都应该算错误文字，将这些文字的索引重新写入到错误索引列表中
@@ -187,10 +194,11 @@ package view
 		private function _refresh():void
 		{
 			var __vo:InputVO = new InputVO(	_inputLength, 
-											_inputRight, 
+											_inputRight,
+											_view.caretIndex, 
 											_inputLength-_inputWrongChars.length, 
 											_rightArticle.length);											
-			sendNotification(ApplicationFacade.INPUT, __vo);
+			sendNotification(ApplicationFacade.INPUT, __vo, _chageType);
 		}
 		
 		private function _reset():void

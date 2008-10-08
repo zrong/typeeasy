@@ -4,7 +4,7 @@
 	layout="vertical"
 	creationComplete="init()">
 	<view:TypeInfo id="typeInfo" width="100%"/>
-	<mx:Text htmlText="说明：&lt;br&gt;　　计时会在你输入文字的时候开始。&lt;b&gt;如果下方的文本输入框的边框不是红色&lt;/b&gt;，请在文本输入框中单击一下，使文本输入框的边框变成红色，然后开始输入文字即可。" width="100%" selectable="false"/>
+	<mx:Text htmlText="说明：&lt;br&gt;　　计时会在你输入文字的时候开始。&lt;b&gt;打字前检查下方文本输入框中有没有输入点&lt;/b&gt;，如果没有，请在文本输入框中单击一下，出现输入点闪烁，然后开始输入文字。" width="100%" selectable="false"/>
 	<mx:VDividedBox height="100%" width="100%">
 		<mx:VBox width="100%" height="50%">
 			<mx:Label text="这是你要输入的文字：" color="#56931B" fontWeight="bold"/>
@@ -22,6 +22,15 @@
 			private function init():void
 			{
 				facade.startup(this);
+			}
+			
+			private function _buildMenu():void
+			{
+				var __menu:ContextMenu = new ContextMenu();
+				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.27');
+				__menu.customItems = [__menuItem];
+				__menu.hideBuiltInItems();
+				this.contextMenu = __menu;
 			}
 		]]>
 	</mx:Script>
