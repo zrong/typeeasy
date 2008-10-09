@@ -10,7 +10,6 @@ package model
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
 	import type.ErrorType;
-	import type.PostType;
 
 	public class PostProxy extends Proxy implements IResponder
 	{
@@ -31,7 +30,7 @@ package model
 		{
 			_doneType = $vo.done_type;
 			var __configVO:ReceiveConfigVO = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ); 
-			var __postURL:String = (_doneType == PostType.TOTAL_TIMER_DONE) ? __configVO.total_timer_done_post_url : __configVO.post_url;
+			var __postURL:String = __configVO.post_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__postURL, $vo);
 			trace('当打字结束的时候提交到服务器，提交的网址__postURL:', __postURL, ',SendPostVO:', $vo);
@@ -40,7 +39,7 @@ package model
 		public function result($data:Object):void
 		{
 			var __vo:ReceivePostVO = new ReceivePostVO($data.result);
-			trace(__vo);
+			trace('打字完成结果返回：', __vo);
 			if(__vo.is_error)
 			{
 				sendNotification(ApplicationFacade.ERROR, '保存打字结果失败！', ErrorType.ERROR);

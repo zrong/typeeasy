@@ -15,51 +15,56 @@ package model
 		private static const DELAY:Number = 1000;
 		
 		private var _time:int = 60000;				//限制的时间
-		private var _spareTime:Number = _time;		//剩余时间
 		
 		public function TotalTimerProxy(data:Object=null)
 		{
 			super(NAME, new Timer(DELAY));
 		}
 		
+		public function get timer():Timer
+		{
+			return getData() as Timer;
+		}
+		
 		public function get running():Boolean
 		{
-			return Timer(getData()).running;
+			return timer.running;
 		}
 		
 		override public function onRemove():void
 		{
 			trace('移除TotalTimerProxy并停止计时');
-			Timer(getData()).stop();
-			Timer(getData()).reset();
+			timer.stop();
+			timer.reset();
 		}
 		
 		public function initTimer($time:Number):void
 		{
 			_time = $time;
-			_spareTime = _time;
-			setData(new Timer(DELAY, _time));
-			Timer(getData()).addEventListener(TimerEvent.TIMER_COMPLETE, _timerCompleteHandler);
+			//Flash提交必须在平台总时间到之前提交，因此减去10秒，比平台总时间提前10秒到。
+			_time -= 10000;
+			setData(new Timer(DELAY));
+			timer.addEventListener(TimerEvent.TIMER, _timerHandler);
 			start();
 		}
 		
 		public function start():void
 		{
-			Timer(getData()).start();
-			trace('TimerProxy开始计时');
+			timer.start();
+			trace('TotalTimerProxy开始计时，剩余的总时间：', _time);
 		}
 		
-		/**
-		 * 时间到的时侯提交
-		 * */
-		private function _timerCompleteHandler(evt:TimerEvent):void
+		
+		private function _timerHandler(evt:TimerEvent):void
 		{
-			trace('总时间到！');
-			Timer(getData()).stop();
-			//在剩余的全部时间到了之后，不管打字的时间到没到，强制提交
-			sendNotification(ApplicationFacade.SEND_POST, PostType.TOTAL_TIMER_DONE);
+//			trace('TotalTimerProxy计时中，第'+timer.currentCount+'次');
+			_time -= DELAY;
+			if(_time <= 0)
+			{
+				timer.stop();
+				timer.reset();
+				sendNotification(ApplicationFacade.SEND_POST, PostType.TOTAL_TIMER_DONE);
+			}
 		}
-		
-		
 	}
 }
