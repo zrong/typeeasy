@@ -6,7 +6,8 @@ package model.vo
 		public var article:String;		//文章内容
 		public var time_limit:int;		//时间限制，毫秒数
 		public var check_url:String;	//中间确认页面地址
-		public var post_url:String;		//提交页面地址
+		public var post_url:String;		//打字完成提交与打字时间到提交地址
+		public var total_timer_done_post_url:String;		//总考试时间到后提交的地址
 		public var remain_total_time:Number;	//剩余的总考试时间。如果用户考试的时侯速度很慢，可能打字快跑开始的时候，剩余的总时间已经小于打字快跑模块的时间，因此要进行计时，总时间如果过完了，即使打字快跑模块的时间没有完，也要强制提交打字快跑成绩。
 		
 		public function ReceiveConfigVO($xml:XML)
@@ -22,6 +23,7 @@ package model.vo
 			time_limit = parseInt($xml.time_limit)*60*1000;
 			check_url = $xml.check_url;
 			post_url = $xml.post_url;
+			total_timer_done_post_url = $xml.total_timer_done_post_url;
 			remain_total_time = Number($xml.remain_total_time)*60*1000;	
 			article = $xml.article;	
 		}

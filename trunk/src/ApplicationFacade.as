@@ -13,6 +13,10 @@ package
 		public static const RECEIVE_START:String = 'receiveStart';
 		public static const RECEIVE_POST:String = 'receivePOST';
 		
+		public static const DONE_TIMER_COMPLETE:String = 'doneTimerComplete';
+		public static const DONE_TIMER:String = 'doneTimer';
+		public static const DONE_TIMER_NAVIGATE:String = 'doneTimerNavigate';
+		
 		public static const SEND_START:String = 'sendStart';
 		public static const SEND_POST:String = 'sendPost';
 		
