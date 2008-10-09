@@ -56,7 +56,7 @@
 			
 			public function setTimerInfo($time:String):void
 			{
-				timerInfoTxt.text = '还有<b><font color="#ff0000">'+ $time + '</font></b>秒自动跳转。';
+				timerInfoTxt.htmlText = '还有<b><font color="#ff0000">'+ $time + '</font></b>秒自动跳转。';
 //				trace('还有'+ $time + '秒自动跳转。');
 			}
 		]]>
