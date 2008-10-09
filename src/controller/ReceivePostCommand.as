@@ -2,6 +2,7 @@ package controller
 {
 	import flash.external.ExternalInterface;
 	
+	import model.DoneTimerProxy;
 	import model.vo.ReceivePostVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -12,7 +13,9 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			var __vo:ReceivePostVO = notification.getBody() as ReceivePostVO;
-			_delFlash(__vo.show_msg, __vo.next_url, notification.getType());
+//			_delFlash(__vo.show_msg, __vo.next_url, notification.getType());
+			var __doneTimer:DoneTimerProxy = facade.retrieveProxy(DoneTimerProxy.NAME) as DoneTimerProxy;
+			__doneTimer.start();
 		}
 		
 		private function _delFlash($msg:String, $url:String, $doneType:String):void

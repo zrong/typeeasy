@@ -10,6 +10,7 @@ package model
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
 	import type.ErrorType;
+	import type.PostType;
 
 	public class PostProxy extends Proxy implements IResponder
 	{
@@ -21,10 +22,16 @@ package model
 			super(NAME, data);
 		}
 		
+		public function get vo():ReceivePostVO
+		{
+			return getData() as ReceivePostVO;
+		}
+		
 		public function send($vo:SendPostVO):void
 		{
 			_doneType = $vo.done_type;
-			var __postURL:String = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ).post_url;
+			var __configVO:ReceiveConfigVO = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ); 
+			var __postURL:String = (_doneType == PostType.TOTAL_TIMER_DONE) ? __configVO.total_timer_done_post_url : __configVO.post_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__postURL, $vo);
 			trace('当打字结束的时候提交到服务器，提交的网址__postURL:', __postURL, ',SendPostVO:', $vo);

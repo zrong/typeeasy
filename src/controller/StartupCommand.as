@@ -19,6 +19,7 @@ package controller
 			facade.registerCommand(ApplicationFacade.RECEIVE_CONFIG, ReceiveConfigCommand);
 			facade.registerCommand(ApplicationFacade.RECEIVE_POST, ReceivePostCommand);
 			facade.registerCommand(ApplicationFacade.INPUT, InputCommand);
+			facade.registerCommand(ApplicationFacade.DONE_TIMER_NAVIGATE, DoneTimerNavigateCommand);
 			
 			var __load:ConfigProxy = new ConfigProxy(); 
 			facade.registerProxy(__load);
@@ -26,6 +27,7 @@ package controller
 			facade.registerProxy(new PostProxy());
 			facade.registerProxy(new TimerProxy());
 			facade.registerProxy(new TotalTimerProxy());
+			facade.registerProxy(new DoneTimerProxy());
 				
 			var __app:TypeEasy = notification.getBody() as TypeEasy;
 			facade.registerMediator(new AppMediator(__app));
