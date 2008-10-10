@@ -30,7 +30,7 @@ package model.dao
 			var __token:AsyncToken = _service.send($param);
 			__token.addResponder(_responder);
 			//词句为调试用
-			load($url, $param);
+//			load($url, $param);
 			
 		}
 		
