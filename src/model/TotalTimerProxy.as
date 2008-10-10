@@ -57,7 +57,7 @@ package model
 		
 		private function _timerHandler(evt:TimerEvent):void
 		{
-//			trace('TotalTimerProxy计时中，第'+timer.currentCount+'次');
+			trace('TotalTimerProxy计时中，剩余的总时间：', _time);
 			_time -= DELAY;
 			if(_time <= 0)
 			{
