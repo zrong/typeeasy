@@ -42,7 +42,7 @@
 			private function _buildMenu():void
 			{
 				var __menu:ContextMenu = new ContextMenu();
-				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.30');
+				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.33');
 				__menu.customItems = [__menuItem];
 				__menu.hideBuiltInItems();
 				this.contextMenu = __menu;

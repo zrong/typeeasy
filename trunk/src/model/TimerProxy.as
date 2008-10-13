@@ -4,6 +4,8 @@ package model
 	import flash.utils.Timer;
 	
 	import model.vo.InputVO;
+	import model.vo.ReceiveConfigVO;
+	import model.vo.SendPostVO;
 	import model.vo.TimerRefreshVO;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
@@ -92,6 +94,21 @@ package model
 		public function getTimerRefreshVO():TimerRefreshVO
 		{
 			return new TimerRefreshVO(_rightRatio, _speed, _percent, _spareTime);
+		}
+		
+		public function getSendPostVO($doneType:String):SendPostVO
+		{
+			var __configVO:ReceiveConfigVO = (facade.retrieveProxy(ConfigProxy.NAME) as ConfigProxy).getData() as ReceiveConfigVO;
+			var __sendPostVO:SendPostVO = new SendPostVO();
+			__sendPostVO.competition_id = __configVO.competition_id;
+			__sendPostVO.module_id = __configVO.module_id;
+			__sendPostVO.article_id = __configVO.article_id;
+			__sendPostVO.project_id = __configVO.project_id;
+			__sendPostVO.right_per = _rightRatio.toString();
+			__sendPostVO.speed = _speed.toString();
+			__sendPostVO.type = PostType.POST;
+			__sendPostVO.done_type = $doneType;
+			return __sendPostVO;
 		}
 			
 //		private function initTimer():void

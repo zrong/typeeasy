@@ -40,6 +40,7 @@ package model
 		public function start():void
 		{
 			timer.start();
+			sendNotification(ApplicationFacade.DONE_TIMER, TIME);
 			trace('DoneTimerProxy开始计时');
 		}
 		
