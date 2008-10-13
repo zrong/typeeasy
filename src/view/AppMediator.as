@@ -1,20 +1,36 @@
 package view
 {
 	import flash.events.Event;
+	import flash.external.ExternalInterface;
 	
 	import model.PostProxy;
+	import model.TimerProxy;
 	import model.vo.ReceivePostVO;
+	import model.vo.SendPostVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
+	
+	import type.PostType;
 
 	public class AppMediator extends Mediator
 	{
 		public static const NAME:String = 'AppMediator';
+		private static const CALL_BACK_FUN_NAME:String = 'getSpeed';
+		 
 		public function AppMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
 			_view.addEventListener(TypeEasy.NAVIGATE_CLICK, _navigateClick);
+			//让JavaScript能够调用Flash中的打字成绩信息
+			if(ExternalInterface.available)	ExternalInterface.addCallback(CALL_BACK_FUN_NAME, _getSendPostVO);
+		}
+		
+		//将打字成绩信息返回给JavaScript
+		private function _getSendPostVO():SendPostVO
+		{
+			var __timerProxy:TimerProxy = facade.retrieveProxy(TimerProxy.NAME) as TimerProxy;
+			return __timerProxy.getSendPostVO(PostType.TOTAL_TIMER_DONE);
 		}
 		
 		private function get _view():TypeEasy
