@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TypeEasy</name>
+	<name>TypeEasy 2.5</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -15,11 +15,4 @@
 		<nature>com.adobe.flexbuilder.project.flexnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] CLASSES</name>
-			<type>2</type>
-			<locationURI>CLASSES</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

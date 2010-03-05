@@ -40,13 +40,13 @@ package model
 		public function start():void
 		{
 			timer.start();
-			sendNotification(ApplicationFacade.DONE_TIMER, TIME);
+			sendNotification(AppFacade.DONE_TIMER, TIME);
 			trace('DoneTimerProxy开始计时');
 		}
 		
 		private function _timerHandler(evt:TimerEvent):void
 		{
-			sendNotification(ApplicationFacade.DONE_TIMER, TIME-timer.currentCount);
+			sendNotification(AppFacade.DONE_TIMER, TIME-timer.currentCount);
 		}
 		
 		/**
@@ -57,7 +57,7 @@ package model
 			trace('跳转时间到！');
 			timer.stop();
 			//在剩余的全部时间到了之后，不管打字的时间到没到，强制提交
-			sendNotification(ApplicationFacade.DONE_TIMER_NAVIGATE);
+			sendNotification(AppFacade.DONE_TIMER_NAVIGATE);
 		}
 		
 		

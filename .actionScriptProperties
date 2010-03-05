@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="type.mxml" version="3">
+<actionScriptProperties mainApplicationPath="TypeEasy.mxml" version="3">
 <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="false" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
-<compilerSourcePath>
-<compilerSourcePathEntry kind="1" linkType="1" path="${CLASSES}"/>
-</compilerSourcePath>
+<compilerSourcePath/>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
+<libraryPathEntry kind="1" linkType="1" path="libs"/>
 </libraryPath>
-<sourceAttachmentPath/>
+<sourceAttachmentPath>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="E:/works/develop/TypeEasy/trunk/libs/PureMVC.swc" sourcepath="${CLASSES}" useDefaultLinkType="false"/>
+<sourceAttachmentPathEntry kind="3" linkType="1" path="E:/works/develop/TypeEasy/trunk/libs/zrong.swc" sourcepath="${CLASSES}" useDefaultLinkType="false"/>
+</sourceAttachmentPath>
 </compiler>
 <applications>
 <application path="TypeEasy.mxml"/>

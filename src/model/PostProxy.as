@@ -29,7 +29,7 @@ package model
 		public function send($vo:SendPostVO):void
 		{
 			_doneType = $vo.done_type;
-			var __configVO:ReceiveConfigVO = ReceiveConfigVO( ConfigProxy( facade.retrieveProxy(ConfigProxy.NAME) ).getData() ); 
+			var __configVO:ReceiveConfigVO = ReceiveConfigVO( OperationProxy( facade.retrieveProxy(OperationProxy.NAME) ).getData() ); 
 			var __postURL:String = __configVO.post_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__postURL, $vo);
@@ -42,19 +42,19 @@ package model
 			trace('打字完成结果返回：', __vo);
 			if(__vo.is_error)
 			{
-				sendNotification(ApplicationFacade.ERROR, '保存打字结果失败！', ErrorType.ERROR);
+				sendNotification(AppFacade.ERROR, '保存打字结果失败！', ErrorType.ERROR);
 			}
 			else
 			{
 				setData(__vo);
-				sendNotification(ApplicationFacade.RECEIVE_POST, __vo, _doneType);
+				sendNotification(AppFacade.RECEIVE_POST, __vo, _doneType);
 			}
 		}
 		
 		public function fault($info:Object):void
 		{
 			trace($info.fault);
-			sendNotification(ApplicationFacade.ERROR, $info.fault, ErrorType.ERROR);
+			sendNotification(AppFacade.ERROR, $info.fault, ErrorType.ERROR);
 		}
 	}
 }

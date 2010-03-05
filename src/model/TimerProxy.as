@@ -87,7 +87,7 @@ package model
 			_percent = Math.floor(_curIndex/_articleLength*100);
 //			_speed = Math.floor(inputTA.length/((time - spareTime)/1000/60));	//瞬时速度
 			_speed = Math.floor(_curIndex/(_time/1000/60));	//真实速度
-			sendNotification(ApplicationFacade.TIMER_REFRESH, getTimerRefreshVO());
+			sendNotification(AppFacade.TIMER_REFRESH, getTimerRefreshVO());
 //			trace('TimerProxy._calculate:', getTimerRefreshVO());
 		}
 		
@@ -98,7 +98,7 @@ package model
 		
 		public function getSendPostVO($doneType:String):SendPostVO
 		{
-			var __configVO:ReceiveConfigVO = (facade.retrieveProxy(ConfigProxy.NAME) as ConfigProxy).getData() as ReceiveConfigVO;
+			var __configVO:ReceiveConfigVO = (facade.retrieveProxy(OperationProxy.NAME) as OperationProxy).getData() as ReceiveConfigVO;
 			var __sendPostVO:SendPostVO = new SendPostVO();
 			__sendPostVO.competition_id = __configVO.competition_id;
 			__sendPostVO.module_id = __configVO.module_id;
@@ -142,7 +142,7 @@ package model
 			if(_spareTime <= 0)
 			{
 				Timer(getData()).stop();
-				sendNotification(ApplicationFacade.SEND_POST, PostType.TIMER_DONE);
+				sendNotification(AppFacade.SEND_POST, PostType.TIMER_DONE);
 				trace('移除TimerProxy并停止计时!');
 			}
 			_calculate();

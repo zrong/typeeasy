@@ -1,5 +1,7 @@
 package view
 {
+	import cn.e21.ParametersVO;
+	
 	import flash.text.TextFormat;
 	
 	import model.vo.InputVO;
@@ -84,19 +86,19 @@ package view
 		}
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.RECEIVE_CONFIG,
-						ApplicationFacade.INPUT	];
+			return	[	AppFacade.RECEIVE_CONFIG,
+						AppFacade.INPUT	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
 		{
 			switch(notification.getName())
 			{
-				case ApplicationFacade.RECEIVE_CONFIG:
-					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
+				case AppFacade.RECEIVE_CONFIG:
+					var __config:ParametersVO = ParametersVO(notification.getBody());
 					_view.text = __config.article;
 					break;
-				case ApplicationFacade.INPUT:
+				case AppFacade.INPUT:
 					var __vo:InputVO = notification.getBody() as InputVO;
 					_refresh(notification.getType(), __vo.curIndex, __vo.inputRight, __vo.caretIndex, __vo.articleLength);
 					break;
