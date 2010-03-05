@@ -30,7 +30,7 @@
 	<mx:Style source="assets/type.css"/>
 	<mx:Script>
 		<![CDATA[			
-			private var facade:ApplicationFacade = ApplicationFacade.getInstance();
+			private var facade:AppFacade = AppFacade.getInstance();
 			public static const NAVIGATE_CLICK:String = 'navigate';
 			
 			private function init():void
@@ -42,7 +42,7 @@
 			private function _buildMenu():void
 			{
 				var __menu:ContextMenu = new ContextMenu();
-				var __menuItem:ContextMenuItem = new ContextMenuItem('打字快跑 v2.0.33');
+				var __menuItem:ContextMenuItem = new ContextMenuItem('e21打字测试 v2.5.33');
 				__menu.customItems = [__menuItem];
 				__menu.hideBuiltInItems();
 				this.contextMenu = __menu;

@@ -1,5 +1,7 @@
 package view
 {
+	import cn.e21.ParametersVO;
+	
 	import model.vo.ReceiveConfigVO;
 	import model.vo.TimerRefreshVO;
 	
@@ -32,19 +34,19 @@ package view
 		
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.RECEIVE_CONFIG,
-						ApplicationFacade.TIMER_REFRESH	];
+			return	[	AppFacade.RECEIVE_CONFIG,
+						AppFacade.TIMER_REFRESH	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
 		{
 			switch(notification.getName())
 			{
-				case ApplicationFacade.RECEIVE_CONFIG:
-					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
+				case AppFacade.RECEIVE_CONFIG:
+					var __config:ParametersVO = ParametersVO(notification.getBody());
 					_view.spareTime = __config.time_limit;
 					break;
-				case ApplicationFacade.TIMER_REFRESH:
+				case AppFacade.TIMER_REFRESH:
 					_refresh(notification.getBody() as TimerRefreshVO);
 					break;
 			}

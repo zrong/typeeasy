@@ -1,5 +1,7 @@
 package view
 {
+	import cn.e21.ParametersVO;
+	
 	import flash.events.Event;
 	import flash.events.TextEvent;
 	
@@ -44,11 +46,6 @@ package view
 		{
 			//保存当前输入的字符
 			_curChar = evt.text;
-			//当文字内容为空的时候，说明是第一次输入文字，发送开始时间到服务器
-			if(_view.length == 0)
-			{
-				sendNotification(ApplicationFacade.SEND_START);
-			}
 		}
 		
 		private function _changeHandler(evt:Event):void
@@ -74,7 +71,7 @@ package view
 			if(__curIndex >= _rightArticle.length)
 			{
 				_view.editable = false;
-				sendNotification(ApplicationFacade.SEND_POST, PostType.INPUT_DONE);
+				sendNotification(AppFacade.SEND_POST, PostType.INPUT_DONE);
 				return;	
 			}			
 			//发布文字改变的信息;
@@ -198,7 +195,7 @@ package view
 											_view.caretIndex, 
 											_inputLength-_inputWrongChars.length, 
 											_rightArticle.length);											
-			sendNotification(ApplicationFacade.INPUT, __vo, _chageType);
+			sendNotification(AppFacade.INPUT, __vo, _chageType);
 		}
 		
 		private function _reset():void
@@ -223,15 +220,15 @@ package view
 		
 		override public function listNotificationInterests():Array
 		{
-			return	[	ApplicationFacade.RECEIVE_CONFIG	];
+			return	[	AppFacade.RECEIVE_CONFIG	];
 		}
 		
 		override public function handleNotification(notification:INotification):void
 		{
 			switch(notification.getName())
 			{
-				case ApplicationFacade.RECEIVE_CONFIG:
-					var __config:ReceiveConfigVO = ReceiveConfigVO(notification.getBody());
+				case AppFacade.RECEIVE_CONFIG:
+					var __config:ParametersVO = ParametersVO(notification.getBody());
 					_rightArticle = __config.article;
 					break;
 			}

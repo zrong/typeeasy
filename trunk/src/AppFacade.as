@@ -4,7 +4,7 @@ package
 	
 	import org.puremvc.as3.patterns.facade.Facade;
 
-	public class ApplicationFacade extends Facade
+	public class AppFacade extends Facade
 	{
 		public static const STARTUP:String = 'startup';
 		public static const ERROR:String = 'error';
@@ -24,10 +24,10 @@ package
 		
 		public static const TIMER_REFRESH:String = 'timerRefresh';
 		
-		public static function getInstance():ApplicationFacade
+		public static function getInstance():AppFacade
 		{
-			if(instance == null) instance = new ApplicationFacade();
-			return instance as ApplicationFacade;
+			if(instance == null) instance = new AppFacade();
+			return instance as AppFacade;
 		}
 		
 		public function startup(app:Object):void

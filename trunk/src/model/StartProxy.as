@@ -25,7 +25,7 @@ package model
 		{
 			
 			var __vo:SendStartVO = new SendStartVO(true, PostType.START);
-			var __checkURL:String = ReceiveConfigVO(ConfigProxy(facade.retrieveProxy(ConfigProxy.NAME)).getData()).check_url;
+			var __checkURL:String = ReceiveConfigVO(OperationProxy(facade.retrieveProxy(OperationProxy.NAME)).getData()).check_url;
 			var __delegate:HTTPDelegate = new HTTPDelegate(this);
 			__delegate.send(__checkURL, __vo);
 			trace('当打字开始的时候提交到服务器，提交的网址__checkURL:', __checkURL);
@@ -37,12 +37,12 @@ package model
 			trace(__vo);
 			if(__vo.is_error)
 			{
-				sendNotification(ApplicationFacade.ERROR, '计时失败！', ErrorType.ERROR);
+				sendNotification(AppFacade.ERROR, '计时失败！', ErrorType.ERROR);
 			}
 			else
 			{
 				setData(__vo);
-				sendNotification(ApplicationFacade.RECEIVE_START, __vo);
+				sendNotification(AppFacade.RECEIVE_START, __vo);
 			}
 		}
 		

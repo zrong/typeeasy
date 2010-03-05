@@ -63,7 +63,7 @@ package model
 			{
 				timer.stop();
 				timer.reset();
-				sendNotification(ApplicationFacade.SEND_POST, PostType.TOTAL_TIMER_DONE);
+				sendNotification(AppFacade.SEND_POST, PostType.TOTAL_TIMER_DONE);
 			}
 		}
 	}

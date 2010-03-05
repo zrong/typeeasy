@@ -8,7 +8,6 @@ package controller
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
-	import org.zengrong.utils.JS;
 	
 	import type.ErrorType;
 
@@ -29,9 +28,6 @@ package controller
 					break;
 				case ErrorType.FLASH_ERROR:
 					_sendFlashError(notification.getBody().toString());
-					break;
-				case ErrorType.CLOSE:
-					JS.close(notification.getBody().toString());
 					break;
 			}
 			

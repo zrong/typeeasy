@@ -13,21 +13,21 @@ package controller
 	{
 		override public function execute(notification:INotification):void
 		{
-			facade.registerCommand(ApplicationFacade.ERROR, ErrorCommand);
-			facade.registerCommand(ApplicationFacade.SEND_START, SendStartCommand);
-			facade.registerCommand(ApplicationFacade.SEND_POST, SendPostCommand);
-			facade.registerCommand(ApplicationFacade.RECEIVE_CONFIG, ReceiveConfigCommand);
-			facade.registerCommand(ApplicationFacade.RECEIVE_POST, ReceivePostCommand);
-			facade.registerCommand(ApplicationFacade.INPUT, InputCommand);
-			facade.registerCommand(ApplicationFacade.DONE_TIMER_NAVIGATE, DoneTimerNavigateCommand);
+			facade.registerCommand(AppFacade.ERROR, ErrorCommand);
+//			facade.registerCommand(AppFacade.SEND_START, SendStartCommand);
+//			facade.registerCommand(AppFacade.SEND_POST, SendPostCommand);
+//			facade.registerCommand(AppFacade.RECEIVE_CONFIG, ReceiveConfigCommand);
+//			facade.registerCommand(AppFacade.RECEIVE_POST, ReceivePostCommand);
+			facade.registerCommand(AppFacade.INPUT, InputCommand);
+//			facade.registerCommand(AppFacade.DONE_TIMER_NAVIGATE, DoneTimerNavigateCommand);
 			
-			var __load:ConfigProxy = new ConfigProxy(); 
+			var __load:OperationProxy = new OperationProxy(); 
 			facade.registerProxy(__load);
-			facade.registerProxy(new StartProxy());
-			facade.registerProxy(new PostProxy());
-			facade.registerProxy(new TimerProxy());
+//			facade.registerProxy(new StartProxy());
+//			facade.registerProxy(new PostProxy());
+//			facade.registerProxy(new TimerProxy());
 //			facade.registerProxy(new TotalTimerProxy());
-			facade.registerProxy(new DoneTimerProxy());
+//			facade.registerProxy(new DoneTimerProxy());
 				
 			var __app:TypeEasy = notification.getBody() as TypeEasy;
 			facade.registerMediator(new AppMediator(__app));
@@ -42,7 +42,7 @@ package controller
 			}
 			catch($err:Error)
 			{
-				sendNotification(ApplicationFacade.ERROR, $err.toString(), ErrorType.ERROR);
+				sendNotification(AppFacade.ERROR, $err.toString(), ErrorType.ERROR);
 				trace($err.getStackTrace());
 			}
 		}
