@@ -42,7 +42,7 @@
 			_loader = new URLLoader();
 			_loader.dataFormat = URLLoaderDataFormat.VARIABLES;
 			_loader.addEventListener(Event.COMPLETE, submitCompleteHandler);
-			trace(JSON.encode(_p));
+			trace('外部变量：', _p);
 			
 			_limitTimer.start();
 			_totalTimer.start();
@@ -69,7 +69,6 @@
 			__obj.competition_id = _p.competition_id;
 			__obj.module_id = _p.module_id;
 			__obj.done_type = $doneType;
-			trace('obj的值：' , __obj);
 			return  JSON.encode(__obj);
 		}
 		

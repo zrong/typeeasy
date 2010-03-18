@@ -9,16 +9,7 @@ package
 		public static const STARTUP:String = 'startup';
 		public static const ERROR:String = 'error';
 		
-		public static const RECEIVE_CONFIG:String = 'receiveConfig';
-		public static const RECEIVE_START:String = 'receiveStart';
-		public static const RECEIVE_POST:String = 'receivePOST';
-		
-		public static const DONE_TIMER_COMPLETE:String = 'doneTimerComplete';
-		public static const DONE_TIMER:String = 'doneTimer';
-		public static const DONE_TIMER_NAVIGATE:String = 'doneTimerNavigate';
-		
-		public static const SEND_START:String = 'sendStart';
-		public static const SEND_POST:String = 'sendPost';
+		public static const RECEIVE_CONFIG:String = 'receiveConfig';	
 		
 		public static const INPUT:String = 'inputChange';
 		
