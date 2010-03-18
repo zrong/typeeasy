@@ -1,5 +1,7 @@
 package cn.e21
 {
+	import mx.utils.URLUtil;
+	
 	public class ParametersVO
 	{
 		
@@ -26,7 +28,7 @@ package cn.e21
 				competition_id = $obj.competition_id;
 				module_id = $obj.module_id;
 				post_url = $obj.post_url;
-				article = $obj.article;
+				article = decodeURIComponent($obj.article);
 				speed = $obj.speed;
 			}
 		}

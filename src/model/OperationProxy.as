@@ -66,6 +66,7 @@ package model
 		*/
 		public function getScore():int
 		{
+			trace('计算得分 _speed:', _speed, ' _rightRatio:', _rightRatio, ' topic_score:', dataVO.topic_score);
 			if( (_rightRatio*_speed/100) >= dataVO.speed ) return dataVO.topic_score;			
 			return Math.round( (_rightRatio*_speed/100/dataVO.speed) * dataVO.topic_score);
 		}
@@ -79,6 +80,7 @@ package model
 			else
 			{
 				initTimer();
+				_articleLength = dataVO.article.length;
 				sendNotification(AppFacade.RECEIVE_CONFIG, dataVO);
 			}
 		}
@@ -102,6 +104,11 @@ package model
 			trace(getProxyName(), '.refresh InputVO:', $vo);
 			calculate();
 			trace(getProxyName(),'.refresh _rightChars:', _rightChars);
+		}
+		
+		public function submit():void
+		{
+			opera.submit(Operation.OPERATE_DONE);
 		}
 		
 		private function calculate():void

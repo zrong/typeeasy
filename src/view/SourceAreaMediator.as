@@ -5,7 +5,6 @@ package view
 	import flash.text.TextFormat;
 	
 	import model.vo.InputVO;
-	import model.vo.ReceiveConfigVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;

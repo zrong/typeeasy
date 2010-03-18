@@ -5,15 +5,14 @@ package view
 	import flash.events.Event;
 	import flash.events.TextEvent;
 	
+	import model.OperationProxy;
 	import model.vo.InputVO;
-	import model.vo.ReceiveConfigVO;
 	import model.vo.WrongCharsVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import type.ChangeType;
-	import type.PostType;
 	
 	import view.components.InputArea;
 
@@ -71,7 +70,7 @@ package view
 			if(__curIndex >= _rightArticle.length)
 			{
 				_view.editable = false;
-				sendNotification(AppFacade.SEND_POST, PostType.INPUT_DONE);
+				(facade.retrieveProxy(OperationProxy.NAME) as OperationProxy).submit();
 				return;	
 			}			
 			//发布文字改变的信息;

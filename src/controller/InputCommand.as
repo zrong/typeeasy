@@ -1,6 +1,6 @@
 package controller
 {
-	import model.TimerProxy;
+	import model.OperationProxy;
 	import model.vo.InputVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -11,9 +11,8 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			var __vo:InputVO = notification.getBody() as InputVO;
-			var __timer:TimerProxy = facade.retrieveProxy(TimerProxy.NAME) as TimerProxy;
-			
-			__timer.refresh(__vo);
+			var __opera:OperationProxy = facade.retrieveProxy(OperationProxy.NAME) as OperationProxy;			
+			__opera.refresh(__vo);
 		}
 	}
 }

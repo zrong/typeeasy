@@ -1,8 +1,5 @@
 package controller
 {
-	import model.TimerProxy;
-	import model.TotalTimerProxy;
-	
 	import mx.controls.Alert;
 	import mx.core.Application;
 	
@@ -53,10 +50,6 @@ package controller
 		
 		private function _sendError($error:String):void
 		{
-			//sendNotification(ApplicationFacade.VS_CHANGE, VSMediator.ERROR);
-			//出错的时候停止计时并移除计时用Proxy
-			if(facade.hasProxy(TimerProxy.NAME)) facade.removeProxy(TimerProxy.NAME);
-			if(facade.hasProxy(TotalTimerProxy.NAME)) facade.removeProxy(TotalTimerProxy.NAME);
 			Application.application.removeAllChildren();
 //			JS.alert($error,'錯誤');
 			Alert.show($error, '錯誤');

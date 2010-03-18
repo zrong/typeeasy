@@ -2,7 +2,6 @@ package view
 {
 	import cn.e21.ParametersVO;
 	
-	import model.vo.ReceiveConfigVO;
 	import model.vo.TimerRefreshVO;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -47,6 +46,7 @@ package view
 					_view.spareTime = __config.time_limit;
 					break;
 				case AppFacade.TIMER_REFRESH:
+					trace('TimerRefresh:', notification.getBody() as TimerRefreshVO);
 					_refresh(notification.getBody() as TimerRefreshVO);
 					break;
 			}

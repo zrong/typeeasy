@@ -14,20 +14,10 @@ package controller
 		override public function execute(notification:INotification):void
 		{
 			facade.registerCommand(AppFacade.ERROR, ErrorCommand);
-//			facade.registerCommand(AppFacade.SEND_START, SendStartCommand);
-//			facade.registerCommand(AppFacade.SEND_POST, SendPostCommand);
-//			facade.registerCommand(AppFacade.RECEIVE_CONFIG, ReceiveConfigCommand);
-//			facade.registerCommand(AppFacade.RECEIVE_POST, ReceivePostCommand);
 			facade.registerCommand(AppFacade.INPUT, InputCommand);
-//			facade.registerCommand(AppFacade.DONE_TIMER_NAVIGATE, DoneTimerNavigateCommand);
 			
-			var __load:OperationProxy = new OperationProxy(); 
-			facade.registerProxy(__load);
-//			facade.registerProxy(new StartProxy());
-//			facade.registerProxy(new PostProxy());
-//			facade.registerProxy(new TimerProxy());
-//			facade.registerProxy(new TotalTimerProxy());
-//			facade.registerProxy(new DoneTimerProxy());
+			var __opera:OperationProxy = new OperationProxy(); 
+			facade.registerProxy(__opera);
 				
 			var __app:TypeEasy = notification.getBody() as TypeEasy;
 			facade.registerMediator(new AppMediator(__app));
@@ -37,8 +27,8 @@ package controller
 			
 			try
 			{
-				trace('调用__load.send');
-				__load.send();
+				trace('调用__opera.send');
+				__opera.send();
 			}
 			catch($err:Error)
 			{
