@@ -3,6 +3,8 @@
 	import com.adobe.serialization.json.*;
 	
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
 	import flash.events.TimerEvent;
 	import flash.external.ExternalInterface;
 	import flash.net.URLLoader;
@@ -42,6 +44,8 @@
 			_loader = new URLLoader();
 			_loader.dataFormat = URLLoaderDataFormat.VARIABLES;
 			_loader.addEventListener(Event.COMPLETE, submitCompleteHandler);
+			_loader.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			trace('外部变量：', _p);
 			
 			_limitTimer.start();
@@ -83,10 +87,11 @@
 				
 				var __request:URLRequest = new URLRequest();
 				__request.method = 'POST';
-				__request.url = _p.post_url;
+				__request.url = _p.post_url+'?q=' + String(Math.random());
 				__request.data = __var;
 				
 				_loader.load(__request);
+//				navigateToURL(__request, '_blank');
 				
 				_limitTimer.removeEventListener(TimerEvent.TIMER, limitTimer_Handler);
 				_limitTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, limitTimer_completeHandler);
@@ -97,11 +102,13 @@
 				
 				trace('提交的地址：' ,__request.url);
 				trace('提交的值：' ,__request.data.requestData);
+				//alert('正在提交：'+__request.url+__request.data.requestData);
 			}
 			catch(err:Error)
 			{
 				trace(err.getStackTrace());
 				alert(err.message);
+				next();
 			}			
 		}
 		
@@ -127,9 +134,21 @@
 		{
 			submit(TOTAL_TIMER_DONE);
 		}
-				
+		
+		private function httpStatusHandler(evt:HTTPStatusEvent):void
+		{
+			//alert('提交http状态:'+evt.status);
+		}
+		
+		private function ioErrorHandler(evt:IOErrorEvent):void
+		{
+			//alert('提交错误：'+evt.text);
+			next();
+		}
+		
 		private function submitCompleteHandler(evt:Event):void
 		{
+			//alert('提交返回：'+_loader.data);
 			try
 			{
 				trace('返回的值：', _loader.data.responseData);
@@ -145,20 +164,30 @@
 				}
 				else
 				{
-					navigateToURL(new URLRequest(__obj.done_url), "_self");
-				}
+					alert('操作题提交成功，转向URL：'+__obj.done_url);
+					//navigateToURL(new URLRequest(__obj.done_url), "_self");
+					navigateToURL(new URLRequest(__obj.done_url), '_self');
+				}				
 			}
 			catch(err:Error)
 			{
 				trace(err.getStackTrace());
 				alert('JSON解析提交返回的结果失败，失败信息：' +err.message+'\r返回的值：'+_loader.data);
+				next();
 			}
 			
 		}
 		
 		private function alert($msg:String):void
 		{
-			ExternalInterface.call('alert',$msg);
+			ExternalInterface.call('alert',$msg);			
+		}
+		
+		//由于IE6的人品问题（不同版本的IE6，有的能接收到返回值，有的接收不到），调用这个js，能够在出错的时候直接跳转到下一步。
+		//因为实际上IE6只是接收不到返回值，但是提交还是成功的，因此在这里调用下一步就能直接跳转。
+		private function next():void
+		{
+			ExternalInterface.call('goto_next_url');
 		}
 	}
 }
